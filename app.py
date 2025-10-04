@@ -15,7 +15,7 @@ lon_manual = st.sidebar.slider("Longitud manual", -180, 180, -99)
 
 tamano = st.sidebar.slider("Diámetro del meteorito (m)", 10, 15000, 100)
 densidad = st.sidebar.slider("Densidad (kg/m³)", 100, 10_000, 3000)
-velocidadkms = st.sidebar.slider("Velocidad (km/s)", 0.1, 30, 5)
+velocidadkms = st.sidebar.slider("Velocidad (km/s)", 1, 30, 5)
 
 # -------------------------
 # Obtener coordenadas
