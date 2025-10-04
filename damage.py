@@ -7,5 +7,5 @@ def generar_puntos_circulo(lat, lon, radio_km, n_puntos=500):
     """
     angles = np.linspace(0, 2*np.pi, n_puntos)
     lats = lat + (radio_km/111) * np.cos(angles)  # aprox grados
-    lons = lon + (radio_km/(111*np.cos(np.radians(lat)))) * np.sin(angles)
+    lons = lon + (radio_km / 111) * np.sin(angles)
     return pd.DataFrame({'lat': lats, 'lon': lons})
