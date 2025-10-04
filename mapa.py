@@ -2,6 +2,8 @@
 import streamlit as st
 import pydeck as pdk
 
+pdk.settings.mapbox_api_key = "pk.eyJ1IjoiYWxhbmVsbnVmamFqYSIsImEiOiJjbWdjbjgwdmgwNXN0Mmtwdnh1c2lpcXI4In0.WacI81toXyjM10MlG4GIsw"
+
 def mostrar_mapa(df, lat, lon, radio_km):
     """
     Muestra un mapa 2D interactivo con Pydeck.
