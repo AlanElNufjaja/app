@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 from parameters import obtener_coordenadas, calcular_radio
 from damage import generar_puntos_circulo
-from map.py import mostrar_mapa  # aquí usa map.py renombrado si quieres
+from map import mostrar_mapa
 
 st.title("Visualizador de Impacto de Meteoritos 2D ☄️")
 
