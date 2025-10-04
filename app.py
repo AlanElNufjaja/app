@@ -1,46 +1,35 @@
 import streamlit as st
-from damage import generar_puntos_circulo, calcular_radio_impacto
+from parameters import obtener_coordenadas, velocidad_realista, calcular_radio_impacto
+from damage import generar_puntos_circulo
 from mapa import mostrar_mapa
-from asteroides import cargar_meteoritos, lista_ids, datos_meteorito
 
-# -----------------------
-# Cargar datos y seleccionar meteorito
-# -----------------------
-df_meteoritos = cargar_meteoritos()
-meteorito_id = st.sidebar.selectbox("Selecciona un meteorito", lista_ids(df_meteoritos))
-datos = datos_meteorito(df_meteoritos, meteorito_id)
+st.title("Visualizador de Meteoritos 2D ☄️")
 
-# -----------------------
-# Mostrar y permitir modificar parámetros
-# -----------------------
-if datos:
-    st.sidebar.markdown("### Parámetros del meteorito")
-    tamano_default = float(datos['estimated_diameter.kilometers.estimated_diameter_max'] * 1000)
-    velocidad_default = float(datos['relative_velocity.kilometers_per_second'])
-    densidad_default = 3000  # valor aproximado por defecto
+# Entradas del usuario
+lugar = st.sidebar.text_input("Nombre de la ciudad")
+lat_manual = st.sidebar.slider("Latitud manual", -90, 90, 19.4326)
+lon_manual = st.sidebar.slider("Longitud manual", -180, 180, -99.1332)
+tamano = st.sidebar.slider("Tamaño del meteorito (m)", 0.1, 500, 100)
+densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, 2000)
 
-    tamano = st.sidebar.slider("Tamaño del meteorito (m)", 10, 5000, int(tamano_default))
-    velocidadkms = st.sidebar.slider("Velocidad (km/s)", 5.0, 80.0, float(velocidad_default), step=0.1)
-    st.write("La densidad mas comun es 200kg/m³")
-    densidad = st.sidebar.slider("Densidad (kg/m³)", 100, 10000, 200)
+# Coordenadas
+lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
 
-    # Coordenadas manuales
-    lat_manual = st.sidebar.slider("Latitud", -90, 90, 19)
-    lon_manual = st.sidebar.slider("Longitud", -180, 180, -99)
+# Velocidad realista según tamaño
+velocidad_kms = velocidad_realista(tamano)
 
-    # Calcular radio
-    radio_km = calcular_radio_impacto(tamano, densidad, velocidadkms)
+# Calcular radio de impacto
+radio_km = calcular_radio_impacto(tamano, densidad, velocidad_kms)
 
-    # Generar puntos del círculo
-    df_circulo = generar_puntos_circulo(lat_manual, lon_manual, radio_km)
+# Generar puntos de impacto (centro y radio)
+df = generar_puntos_circulo(lat, lon, radio_km)
 
-    # Mostrar info
-    st.write(f"ID: {meteorito_id}")
-    st.write(f"Tamaño: {tamano} m, Velocidad: {velocidadkms} km/s, Densidad: {densidad} kg/m³")
-    st.write(f"Radio de impacto estimado: {radio_km:.2f} km")
-    st.write(f"Coordenadas: {lat_manual}, {lon_manual}")
+# Mostrar info
+st.write(f"Tamaño: {tamano} m")
+st.write(f"Densidad: {densidad} kg/m³")
+st.write(f"Velocidad de impacto: {velocidad_kms} km/s")
+st.write(f"Radio estimado de impacto: {radio_km:.2f} km")
+st.write(f"Coordenadas: {lat:.4f}, {lon:.4f}")
 
-    # Mostrar mapa
-    mostrar_mapa(df_circulo, lat_manual, lon_manual, radio_km)
-else:
-    st.error("No se encontró el meteorito seleccionado.")
+# Mostrar mapa
+mostrar_mapa(df, lat, lon, radio_km)
