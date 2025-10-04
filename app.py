@@ -13,10 +13,9 @@ lugar = st.sidebar.text_input("Nombre de la ciudad")
 lat_manual = st.sidebar.slider("Latitud manual", -90, 90, 19)
 lon_manual = st.sidebar.slider("Longitud manual", -180, 180, -99)
 
-tamano = st.sidebar.slider("Diámetro del meteorito (m)", 10, 500, 100)
-masa = st.sidebar.slider("Masa (kg)", 100, 1_000_000, 1000)
+tamano = st.sidebar.slider("Diámetro del meteorito (m)", 10, 15000, 100)
 densidad = st.sidebar.slider("Densidad (kg/m³)", 100, 10_000, 3000)
-velocidad = st.sidebar.slider("Velocidad (m/s)", 1000, 100_000, 20000)
+velocidad = st.sidebar.slider("Velocidad (km/s)", 1, 30, 20000)
 
 # -------------------------
 # Obtener coordenadas
@@ -33,7 +32,7 @@ df = generar_puntos_circulo(lat, lon, radio_km)
 # Mostrar info
 # -------------------------
 st.write(f"Coordenadas: {lat:.4f}, {lon:.4f}")
-st.write(f"Diámetro: {tamano} m | Masa: {masa} kg | Densidad: {densidad} kg/m³ | Velocidad: {velocidad} m/s")
+st.write(f"Diámetro: {tamano} m | Densidad: {densidad} kg/m³ | Velocidad: {velocidad} m/s")
 st.write(f"Radio estimado de impacto: {radio_km:.2f} km")
 
 # -------------------------
