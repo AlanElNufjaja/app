@@ -1,22 +1,25 @@
 # parameters.py
+from geopy.geocoders import Nominatim
 
-def obtener_coordenadas(lugar):
+def obtener_coordenadas(lugar, manual_lat=0.0, manual_lon=0.0):
     """
-    Obtiene coordenadas según el nombre del lugar.
-    Si no hay lugar o no se encuentra, devuelve Ciudad de México.
+    Obtiene coordenadas usando geopy.
+    Si no se encuentra o hay error, usa coordenadas manuales o Ciudad de México por defecto.
     """
-    lugares_simulados = {
-        "mexico": (19.4326, -99.1332),
-        "tokyo": (35.6895, 139.6917),
-        "paris": (48.8566, 2.3522)
-    }
-    
     if lugar:
-        key = lugar.lower()
-        if key in lugares_simulados:
-            return lugares_simulados[key]
-    
-    # Si no hay lugar válido, Ciudad de México por defecto
+        try:
+            geolocator = Nominatim(user_agent="meteor_app")
+            location = geolocator.geocode(lugar)
+            if location:
+                return location.latitude, location.longitude
+        except:
+            pass
+
+    # Si falla, usa coordenadas manuales
+    if manual_lat != 0.0 or manual_lon != 0.0:
+        return manual_lat, manual_lon
+
+    # fallback por defecto
     return 19.4326, -99.1332
 
 def calcular_radio(tamano):
