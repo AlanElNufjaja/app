@@ -1,32 +1,29 @@
 # parameters.py
 from geopy.geocoders import Nominatim
 
-# Límites
+# Límites válidos del mapa
 LAT_MIN, LAT_MAX = -90.0, 90.0
 LON_MIN, LON_MAX = -180.0, 180.0
 
 def obtener_coordenadas(nombre_ciudad, lat_manual=19.4326, lon_manual=-99.1332):
     """
-    Convierte un nombre de ciudad a lat/lon usando Geopy.
-    Si falla o está vacío, usa lat/lon manual y ajusta a límites válidos.
+    Devuelve coordenadas (lat, lon) de una ciudad.
+    Si no se encuentra o el campo está vacío, usa los valores manuales.
     """
-    # Aplicar límites inmediatamente a los parámetros manuales
     lat_manual = max(LAT_MIN, min(LAT_MAX, lat_manual))
     lon_manual = max(LON_MIN, min(LON_MAX, lon_manual))
+    lat, lon = lat_manual, lon_manual  # valores por defecto
 
-    # Siempre partimos de las coordenadas manuales como fallback
-    lat, lon = lat_manual, lon_manual
-
-    if nombre_ciudad.strip() != "":
+    if nombre_ciudad.strip():
         try:
             geolocator = Nominatim(user_agent="meteoro_app")
-            location = geolocator.geocode(nombre_ciudad, timeout=5)  # timeout corto
+            location = geolocator.geocode(nombre_ciudad, timeout=5)
             if location:
                 lat, lon = location.latitude, location.longitude
-        except:
-            pass  # si falla, usamos lat/lon manual
+        except Exception:
+            pass  # si falla geopy, se quedan los valores manuales
 
-    # Aplicar límites de nuevo después de usar geopy
+    # Asegurar que no se salga de los límites del mapa
     lat = max(LAT_MIN, min(LAT_MAX, lat))
     lon = max(LON_MIN, min(LON_MAX, lon))
     return lat, lon
@@ -34,7 +31,8 @@ def obtener_coordenadas(nombre_ciudad, lat_manual=19.4326, lon_manual=-99.1332):
 
 def calcular_radio(tamano_metro):
     """
-    Calcula un radio estimado de impacto en km según tamaño del meteorito.
+    Calcula un radio visual para el impacto (no geográfico, solo para el mapa 2D).
     """
-    radio_km = tamano_metro * 0.1
-    return radio_km
+    # En vez de convertir metros a km reales, solo lo escalamos visualmente
+    radio_visual = tamano_metro / 50.0  # ajusta este divisor si se ve muy grande o chico
+    return radio_visual
