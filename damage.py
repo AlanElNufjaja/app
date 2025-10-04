@@ -6,11 +6,10 @@ def generar_puntos_circulo(lat, lon, radio_km, n_puntos=1):
     """
     return pd.DataFrame({'lat': [lat], 'lon': [lon], 'radio_km': [radio_km]})
 
-def calcular_radio_impacto(tamano_m, masa, densidad, velocidadkms, k=0.05):
+def calcular_radio_impacto(tamano_m, densidad, velocidadkms, k=0.05):
     """
     Calcula un radio estimado de destrucción en km según parámetros del meteorito:
     - tamano_m: diámetro en metros
-    - masa: kg
     - densidad: kg/m³
     - velocidad: m/s
     """
