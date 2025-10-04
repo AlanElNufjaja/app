@@ -32,8 +32,8 @@ lat_manual = st.sidebar.slider("Latitud manual", float(-80), float(80), 19.44, s
 lon_manual = st.sidebar.slider("Longitud manual", float(-180), float(180), -99.1, step=0.0001)
 
 # Ahora tus sliders usan los valores del meteorito seleccionado como default
-tamano = st.sidebar.slider("Tamaño del meteorito (m)", 0.1, 500, float(tamano))
-densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, float(densidad))
+tamano = st.sidebar.slider("Tamaño del meteorito (m)", 0.1, 500.0, float(tamano))
+densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, int(densidad))
 
 # Coordenadas
 lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
