@@ -1,32 +1,28 @@
-# parameters.py
-from geopy.geocoders import Nominatim
+# app.py
+import streamlit as st
+from parameters import obtener_coordenadas, calcular_radio
+from damage import generar_puntos_circulo
+from mapa import mostrar_mapa
 
-# Límites
-LAT_MIN, LAT_MAX = -90.0, 90.0
-LON_MIN, LON_MAX = -180.0, 180.0
+st.title("Visualizador de Meteoritos 2D ☄️")
 
-def obtener_coordenadas(nombre_ciudad, lat_manual=19.4326, lon_manual=-99.1332):
-    """
-    Convierte un nombre de ciudad a lat/lon usando Geopy.
-    Si falla o está vacío, usa lat/lon manual y ajusta a límites válidos.
-    """
-    lat_manual = max(LAT_MIN, min(LAT_MAX, lat_manual))
-    lon_manual = max(LON_MIN, min(LON_MAX, lon_manual))
-    lat, lon = lat_manual, lon_manual
+# Parámetros del usuario
+lugar = st.sidebar.text_input("Nombre de la ciudad")
+lat_manual = st.sidebar.slider("Latitud manual", -90, 90, 19)
+lon_manual = st.sidebar.slider("Longitud manual", -180, 180, -99)
+tamano = st.sidebar.slider("Tamaño del meteorito (m)", 10, 500, 100)
 
-    if nombre_ciudad.strip() != "":
-        try:
-            geolocator = Nominatim(user_agent="meteoro_app")
-            location = geolocator.geocode(nombre_ciudad, timeout=5)
-            if location:
-                lat, lon = location.latitude, location.longitude
-        except:
-            pass
+# Obtener coordenadas
+lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
 
-    lat = max(LAT_MIN, min(LAT_MAX, lat))
-    lon = max(LON_MIN, min(LON_MAX, lon))
-    return lat, lon
+# Calcular radio y generar puntos de impacto
+radio_km = calcular_radio(tamano)
+df = generar_puntos_circulo(lat, lon, radio_km, n_puntos=300)
 
-def calcular_radio(tamano_metro):
-    """Calcula un radio aproximado de impacto en km"""
-    return tamano_metro * 0.1
+# Mostrar info
+st.write(f"Tamaño del meteorito: {tamano} m")
+st.write(f"Radio estimado de impacto: {radio_km:.1f} km")
+st.write(f"Coordenadas: {lat:.4f}, {lon:.4f}")
+
+# Mostrar mapa 2D
+mostrar_mapa(df, lat, lon, radio_km)
