@@ -1,69 +1,63 @@
-# app.py
-import streamlit as st
-import pandas as pd
-from parameters import obtener_coordenadas, calcular_radio_impacto
-from damage import generar_puntos_circulo
+# parameters.py
+from geopy.geocoders import Nominatim
 
-st.set_page_config(page_title="Simulador de Meteoritos", layout="wide")
+# Límites
+LAT_MIN, LAT_MAX = -90.0, 90.0
+LON_MIN, LON_MAX = -180.0, 180.0
 
-st.title("💥 Simulador de Impacto de Meteoritos")
+# Velocidades típicas (km/s)
+VEL_MIN, VEL_MAX = 11, 72
 
-# -----------------------------
-# Entradas del usuario
-# -----------------------------
-lugar = st.sidebar.text_input("Nombre de la ciudad")
+def obtener_coordenadas(nombre_ciudad, lat_manual=19.4326, lon_manual=-99.1332):
+    """
+    Convierte un nombre de ciudad a lat/lon usando Geopy.
+    Si falla o está vacío, usa lat/lon manual y ajusta a límites válidos.
+    """
+    # Aplicar límites inmediatamente a los parámetros manuales
+    lat_manual = max(LAT_MIN, min(LAT_MAX, lat_manual))
+    lon_manual = max(LON_MIN, min(LON_MAX, lon_manual))
 
-lat_manual = st.sidebar.slider("Latitud manual", -80.0, 80.0, 19.4326)
-lon_manual = st.sidebar.slider("Longitud manual", -180.0, 180.0, -99.1332)
+    # Siempre partimos de las coordenadas manuales como fallback
+    lat, lon = lat_manual, lon_manual
 
-tamano = st.sidebar.slider("Tamaño del meteorito (m)", 0.1, 500.0, 100.0)
-densidad = st.sidebar.slider("Densidad (kg/m³)", 1000.0, 8000.0, 2000.0)
-velocidad = st.sidebar.slider("Velocidad (km/s)", 5.0, 72.0, 20.0)  # velocidad típica de meteoritos
+    if nombre_ciudad.strip() != "":
+        try:
+            geolocator = Nominatim(user_agent="meteoro_app")
+            location = geolocator.geocode(nombre_ciudad, timeout=5)  # timeout corto
+            if location:
+                lat, lon = location.latitude, location.longitude
+        except:
+            pass  # si falla, usamos lat/lon manual
 
-# -----------------------------
-# Obtener coordenadas
-# -----------------------------
-lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
-st.write(f"Coordenadas: {lat:.4f}, {lon:.4f}")
+    # Aplicar límites de nuevo después de usar geopy
+    lat = max(LAT_MIN, min(LAT_MAX, lat))
+    lon = max(LON_MIN, min(LON_MAX, lon))
+    return lat, lon
 
-# -----------------------------
-# Calcular radio de impacto
-# -----------------------------
-radio_km = calcular_radio_impacto(tamano, densidad, velocidad)
-st.write(f"Radio estimado de destrucción: {radio_km:.2f} km")
 
-# -----------------------------
-# Generar círculo de impacto
-# -----------------------------
-df_circulo = generar_puntos_circulo(lat, lon, radio_km)
-st.write("Datos del círculo de impacto:")
-st.dataframe(df_circulo)
+def velocidad_realista(tamano_m):
+    """
+    Calcula la velocidad promedio de impacto según tamaño del meteorito.
+    Los meteoritos pequeños se frenan mucho y se desintegran, los grandes mantienen velocidad.
+    tamano_m: diámetro en metros
+    Retorna velocidad en km/s
+    """
+    if tamano_m < 1:
+        return 0  # se desintegra
+    elif tamano_m < 10:
+        return 12  # pequeños, frenados
+    elif tamano_m < 50:
+        return 20  # medianos
+    else:
+        return 25  # grandes
 
-# -----------------------------
-# Mapa con DeckGL
-# -----------------------------
-import pydeck as pdk
-
-layer = pdk.Layer(
-    "ScatterplotLayer",
-    data=df_circulo,
-    get_position='[lon, lat]',
-    get_color='[255, 0, 0, 160]',
-    get_radius='radio_km*1000',
-    pickable=True
-)
-
-view_state = pdk.ViewState(
-    latitude=lat,
-    longitude=lon,
-    zoom=6,
-    pitch=0
-)
-
-r = pdk.Deck(
-    layers=[layer],
-    initial_view_state=view_state,
-    map_style="mapbox://styles/mapbox/light-v11"
-)
-
-st.pydeck_chart(r)
+def calcular_radio_impacto(tamano_m, densidad, velocidad_kms, k=0.05):
+    """
+    Calcula un radio estimado de destrucción en km según parámetros del meteorito:
+    - tamano_m: diámetro en metros
+    - densidad: kg/m³
+    - velocidad_kms: velocidad en km/s
+    """
+    velocidad = velocidad_kms * 1000  # pasar a m/s
+    radio = k * (tamano_m**(1/3)) * (densidad**(1/3)) * (velocidad**(2/3))
+    return radio
