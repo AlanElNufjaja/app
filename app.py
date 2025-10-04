@@ -66,7 +66,7 @@ def generar_puntos_circulo(lat, lon, radio_km, n_puntos=500):
 
 def mostrar_mapa(df, lat, lon, radio_km):
     """
-    Muestra el mapa 2D con Pydeck
+    Muestra el mapa 2D con Pydeck sin necesidad de token Mapbox
     """
     layer = pdk.Layer(
         "ScatterplotLayer",
@@ -81,7 +81,7 @@ def mostrar_mapa(df, lat, lon, radio_km):
     deck = pdk.Deck(
         layers=[layer],
         initial_view_state=view_state,
-        map_style="mapbox://styles/mapbox/light-v10"
+        map_style="open-street-map"  # estilo libre sin token
     )
 
     st.pydeck_chart(deck)
