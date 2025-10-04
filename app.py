@@ -7,55 +7,39 @@ from mapa import mostrar_mapa
 st.title("Visualizador de Meteoritos 2D ☄️")
 
 # ======================
-# Cargar datos de meteoritos
+# Lista de meteoritos
 # ======================
-# datos_base.csv: columnas ['id', 'absolute_magnitude_h', 'estimated_diameter.kilometers.estimated_diameter_min', 'estimated_diameter.kilometers.estimated_diameter_max']
-# datos_limpios.csv: columnas ['close_approach_date_full', 'orbiting_body', 'relative_velocity.kilometers_per_second', 'miss_distance.lunar', 'miss_distance.kilometers']
-
 datos_base = pd.read_csv("datos_base.csv")
 datos_limpios = pd.read_csv("datos_limpios.csv")
 
-# Unir datos por index para simplificar
+# Combinar datos solo para poder acceder a tamaño y velocidad
 meteoritos = pd.concat([datos_base, datos_limpios], axis=1)
-
-# Lista de meteoritos por ID
 opciones = meteoritos['id'].astype(str).tolist()
 meteorito_seleccionado = st.sidebar.selectbox("Selecciona un meteorito", opciones)
 
-# Obtener datos del meteorito seleccionado
 mete = meteoritos[meteoritos['id'].astype(str) == meteorito_seleccionado].iloc[0]
 
-densidad_default = 3000  # kg/m³ típico de un meteorito rocoso
-velocidad_default = mete['relative_velocity.kilometers_per_second']
+# Datos predeterminados del meteorito seleccionado
+tamano = (mete['estimated_diameter.kilometers.estimated_diameter_min'] + mete['estimated_diameter.kilometers.estimated_diameter_max']) / 2 * 1000  # km a m
+densidad = 3000  # kg/m³ estándar
+velocidad_kms = mete['relative_velocity.kilometers_per_second']
 
 # ======================
 # Entradas del usuario
 # ======================
 lugar = st.sidebar.text_input("Nombre de la ciudad")
 lat_manual = st.sidebar.slider("Latitud manual", float(-80), float(80), 19.44, step=0.0001)
-lon_manual = st.sidebar.slider("Longitud manual", float(-180), float(180), -99.1, step=0.0001)
+lon_manual = st.sidebar.slider("Longitud manual", float(-180), float(180), -99, step=0.0001)
 
-tamano = st.sidebar.slider(
-    "Tamaño del meteorito (m)", 
-    float(100), 
-    float(15000), 
-    float(1000),
-    step=1.0
-)
-
-densidad = st.sidebar.slider(
-    "Densidad (kg/m³)", 
-    1000.0, 
-    8000.0, 
-    float(densidad_default),
-    step=1.0
-)
+# Ahora tus sliders usan los valores del meteorito seleccionado como default
+tamano = st.sidebar.slider("Tamaño del meteorito (m)", 0.1, 500, float(tamano))
+densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, float(densidad))
 
 # Coordenadas
 lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
 
-# Velocidad realista según tamaño y selección
-velocidad_kms = velocidad_realista(tamano) if st.sidebar.checkbox("Calcular velocidad realista") else float(velocidad_default)
+# Velocidad realista según tamaño
+velocidad_kms = velocidad_realista(tamano) if st.sidebar.checkbox("Calcular velocidad realista") else float(velocidad_kms)
 
 # Calcular radio de impacto
 radio_km = calcular_radio_impacto(tamano, densidad, velocidad_kms)
