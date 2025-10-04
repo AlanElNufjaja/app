@@ -1,25 +1,24 @@
 # parameters.py
-import requests
 
 def obtener_coordenadas(lugar):
     """
-    Obtiene las coordenadas geográficas de un lugar utilizando la NASA Meteorite Landings API.
-    Si no se encuentra el lugar, devuelve coordenadas predeterminadas.
+    Obtiene coordenadas según el nombre del lugar.
+    Si no hay lugar o no se encuentra, devuelve Ciudad de México.
     """
-    url = f"https://data.nasa.gov/api/3/action/datastore_search_sql?sql=SELECT%20*%20FROM%20meteorite_landings%20WHERE%20name%20LIKE%20'{lugar}%'"
-    response = requests.get(url)
-    data = response.json()
+    lugares_simulados = {
+        "mexico": (19.4326, -99.1332),
+        "tokyo": (35.6895, 139.6917),
+        "paris": (48.8566, 2.3522)
+    }
     
-    if data['result']['records']:
-        record = data['result']['records'][0]
-        lat, lon = float(record['reclat']), float(record['reclong'])
-        return lat, lon
-    else:
-        # Coordenadas predeterminadas si no se encuentra el lugar
-        return 19.4326, -99.1332
+    if lugar:
+        key = lugar.lower()
+        if key in lugares_simulados:
+            return lugares_simulados[key]
+    
+    # Si no hay lugar válido, Ciudad de México por defecto
+    return 19.4326, -99.1332
 
 def calcular_radio(tamano):
-    """
-    Calcula el radio de impacto en kilómetros según el tamaño del meteorito.
-    """
-    return tamano * 0.1  # Ejemplo: cada 10 metros de tamaño = 1 km de radio
+    """Calcula radio de impacto en km según tamaño del meteorito"""
+    return tamano * 0.1
