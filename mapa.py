@@ -2,7 +2,7 @@
 import streamlit as st
 import pydeck as pdk
 
-pdk.settings.mapbox_api_key = "TU_TOKEN_MAPBOX"
+pdk.settings.mapbox_api_key = "pk.eyJ1IjoiYWxhbmVsbnVmamFqYSIsImEiOiJjbWdjbmIycnUwNXMxMmxwc2Exemo5NTg2In0.VBBKq9TBBoNS4DFkw8JRuw"
 
 def mostrar_mapa(df, lat, lon, radio_km):
     layer = pdk.Layer(
