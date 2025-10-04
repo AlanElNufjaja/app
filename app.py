@@ -10,7 +10,7 @@ lugar = st.sidebar.text_input("Nombre de la ciudad")
 lat_manual = st.sidebar.slider("Latitud manual", float(-80), float(80), 19.44)
 lon_manual = st.sidebar.slider("Longitud manual", -180, 180, -99)
 tamano = st.sidebar.slider("Tamaño del meteorito (m)", 0.1, float(500), float(100))
-densidad = st.sidebar.slider("Densidad (kg/m³)", float(1000), float(8000), 2000)
+densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, 2000)
 
 # Coordenadas
 lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
