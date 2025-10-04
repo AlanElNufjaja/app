@@ -10,7 +10,7 @@ st.title("Visualizador de Meteoritos 2D ☄️")
 lugar = st.sidebar.text_input("Nombre de la ciudad")
 lat_manual = st.sidebar.slider("Latitud manual", -80, 80, 1)
 lon_manual = st.sidebar.slider("Longitud manual", -180, 180, 1)
-tamano = st.sidebar.slider("Tamaño del meteorito (m)", 10, 500, 1)
+tamano = st.sidebar.slider("Tamaño del meteorito (m)", 10, 10000, 1)
 
 # Obtener coordenadas
 lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
