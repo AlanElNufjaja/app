@@ -31,7 +31,7 @@ def mostrar_mapa(df, lat, lon, radio_km):
     r = pdk.Deck(
         layers=[layer],
         initial_view_state=view_state,
-        map_style="mapbox://styles/mapbox/light-v9"
+        map_style="road"
     )
 
     st.pydeck_chart(r)
