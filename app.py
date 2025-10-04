@@ -25,7 +25,7 @@ lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
 # -------------------------
 # Calcular radio y puntos
 # -------------------------
-radio_km = calcular_radio_impacto(tamano, masa, densidad, velocidadkms)
+radio_km = calcular_radio_impacto(tamano, densidad, velocidadkms)
 df = generar_puntos_circulo(lat, lon, radio_km)
 
 # -------------------------
