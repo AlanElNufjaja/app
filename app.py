@@ -21,6 +21,7 @@ if datos:
 
     tamano = st.sidebar.slider("Tamaño del meteorito (m)", 10, 5000, int(tamano_default))
     velocidadkms = st.sidebar.slider("Velocidad (km/s)", 5.0, 80.0, float(velocidad_default), step=0.1)
+    st.write("La densidad mas comun es 200kg/m³)
     densidad = st.sidebar.slider("Densidad (kg/m³)", 100, 10000, 200)
 
     # Coordenadas manuales
