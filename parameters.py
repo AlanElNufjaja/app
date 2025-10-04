@@ -13,7 +13,7 @@ st.title("💥 Simulador de Impacto de Meteoritos")
 # -----------------------------
 lugar = st.sidebar.text_input("Nombre de la ciudad")
 
-lat_manual = st.sidebar.slider("Latitud manual", -90.0, 90.0, 19.4326)
+lat_manual = st.sidebar.slider("Latitud manual", -80.0, 80.0, 19.4326)
 lon_manual = st.sidebar.slider("Longitud manual", -180.0, 180.0, -99.1332)
 
 tamano = st.sidebar.slider("Tamaño del meteorito (m)", 0.1, 500.0, 100.0)
