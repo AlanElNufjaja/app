@@ -3,7 +3,7 @@ import streamlit as st
 import pydeck as pdk
 
 # Tu token de Mapbox
-pdk.settings.mapbox_api_key = "pk.eyJ1IjoiYWxhbmVsamFqYSIsImEiOiJjbWdjbjgwdmgwNXN0Mmtwdnh1c2lpcXI4In0.WacI81toXyjM10MlG4GIsw"
+pdk.settings.mapbox_api_key = "pk.eyJ1IjoiYWxhbmVsbnVmamFqYSIsImEiOiJjbWdjbmIycnUwNXMxMmxwc2Exemo5NTg2In0.VBBKq9TBBoNS4DFkw8JRuw"
 
 def mostrar_mapa(df, lat, lon, radio_km):
     """
