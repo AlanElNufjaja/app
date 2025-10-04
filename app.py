@@ -25,10 +25,6 @@ meteorito_seleccionado = st.sidebar.selectbox("Selecciona un meteorito", opcione
 # Obtener datos del meteorito seleccionado
 mete = meteoritos[meteoritos['id'].astype(str) == meteorito_seleccionado].iloc[0]
 
-tamano_min = mete['estimated_diameter.kilometers.estimated_diameter_min'] * 1000  # km a m
-tamano_max = mete['estimated_diameter.kilometers.estimated_diameter_max'] * 1000
-tamano_default = (tamano_min + tamano_max) / 2
-
 densidad_default = 3000  # kg/m³ típico de un meteorito rocoso
 velocidad_default = mete['relative_velocity.kilometers_per_second']
 
@@ -41,9 +37,9 @@ lon_manual = st.sidebar.slider("Longitud manual", float(-180), float(180), -99.1
 
 tamano = st.sidebar.slider(
     "Tamaño del meteorito (m)", 
-    float(tamano_min), 
-    float(tamano_max), 
-    float(tamano_default),
+    float(100), 
+    float(15000), 
+    float(1000),
     step=1.0
 )
 
