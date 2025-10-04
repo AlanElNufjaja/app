@@ -39,4 +39,5 @@ dff=dff.drop(columns=['close_approach_date','epoch_date_close_approach',
  
        'miss_distance.miles'])
 print(dff.columns)
-dff.to_csv("datos_base.csv", index=False)
+dff.to_csv("datos_limpios.csv", index=False)
+
