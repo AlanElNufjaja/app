@@ -15,7 +15,7 @@ lon_manual = st.sidebar.slider("Longitud manual", -180, 180, -99)
 
 tamano = st.sidebar.slider("Diámetro del meteorito (m)", 10, 15000, 100)
 densidad = st.sidebar.slider("Densidad (kg/m³)", 100, 10_000, 3000)
-velocidad = st.sidebar.slider("Velocidad (km/s)", 1, 30, 20000)
+velocidadkms = st.sidebar.slider("Velocidad (km/s)", 1, 30, 20000)
 
 # -------------------------
 # Obtener coordenadas
@@ -25,7 +25,7 @@ lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
 # -------------------------
 # Calcular radio y puntos
 # -------------------------
-radio_km = calcular_radio_impacto(tamano, masa, densidad, velocidad)
+radio_km = calcular_radio_impacto(tamano, masa, densidad, velocidadkms)
 df = generar_puntos_circulo(lat, lon, radio_km)
 
 # -------------------------
