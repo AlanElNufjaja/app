@@ -1,7 +1,8 @@
+# mapa.py
 import streamlit as st
 import pydeck as pdk
 
-pdk.settings.mapbox_api_key = "pk.eyJ1IjoiYWxhbmVsbnVmamFqYSIsImEiOiJjbWdjbjgwdmgwNXN0Mmtwdnh1c2lpcXI4In0.WacI81toXyjM10MlG4GIsw"
+pdk.settings.mapbox_api_key = "TU_TOKEN_MAPBOX"
 
 def mostrar_mapa(df, lat, lon, radio_km):
     layer = pdk.Layer(
@@ -17,15 +18,14 @@ def mostrar_mapa(df, lat, lon, radio_km):
         latitude=lat,
         longitude=lon,
         zoom=6,
-        pitch=45,      # <- esto lo inclina para dar efecto 3D
+        pitch=45,      # efecto 3D visual
         bearing=0
     )
 
     r = pdk.Deck(
         layers=[layer],
         initial_view_state=view_state,
-        map_style="mapbox://styles/mapbox/satellite-streets-v12",  # vista tipo Google Earth
-        terrain=True
+        map_style="mapbox://styles/mapbox/satellite-streets-v12"
     )
 
     st.pydeck_chart(r)
