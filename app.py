@@ -37,7 +37,7 @@ velocidad_default = mete['relative_velocity.kilometers_per_second']
 # ======================
 lugar = st.sidebar.text_input("Nombre de la ciudad")
 lat_manual = st.sidebar.slider("Latitud manual", float(-80), float(80), 19.44, step=0.0001)
-lon_manual = st.sidebar.slider("Longitud manual", float(-180), float(180), -99, step=0.0001)
+lon_manual = st.sidebar.slider("Longitud manual", float(-180), float(180), -99.1, step=0.0001)
 
 tamano = st.sidebar.slider(
     "Tamaño del meteorito (m)", 
