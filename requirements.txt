@@ -5,3 +5,4 @@ pydeck
 geopy
 folium
 streamlit-folium
+pydeck
