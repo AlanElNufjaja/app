@@ -10,7 +10,7 @@ st.title("Visualizador de Meteoritos 2D ☄️")
 # Panel lateral: entrada del usuario
 # -------------------------
 lugar = st.sidebar.text_input("Nombre de la ciudad")
-lat_manual = st.sidebar.slider("Latitud manual", -90, 90, 19)
+lat_manual = st.sidebar.slider("Latitud manual", -80, 80, 19)
 lon_manual = st.sidebar.slider("Longitud manual", -180, 180, -99)
 
 tamano = st.sidebar.slider("Diámetro del meteorito (m)", 10, 15000, 100)
