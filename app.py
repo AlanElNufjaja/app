@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from geopy.geocoders import Nominatim
 
 # Configuración de la página
 st.set_page_config(page_title="Visualizador de Meteoros ☄️", layout="centered")
@@ -12,24 +13,55 @@ st.write("Simula el lugar donde caería un meteoro y la zona de daño proporcion
 # -------------------------
 st.sidebar.header("⚙️ Parámetros del impacto")
 
-lat = st.sidebar.number_input("Latitud del impacto", value=19.4326, step=0.01, format="%.4f")
-lon = st.sidebar.number_input("Longitud del impacto", value=-99.1332, step=0.01, format="%.4f")
+# Input principal: lugar
+lugar = st.sidebar.text_input("🌎 Ingresa el lugar del impacto (ej. México, Tokyo):", "")
+
+# Input secundario: lat/lon manual
+manual_lat = st.sidebar.number_input("Latitud del impacto (manual, solo si falla el lugar)", value=0.0, step=0.01, format="%.4f")
+manual_lon = st.sidebar.number_input("Longitud del impacto (manual, solo si falla el lugar)", value=0.0, step=0.01, format="%.4f")
+
+# Tamaño del meteoro
 tamano = st.sidebar.slider("Tamaño del meteoro (m)", 10, 500, 100)
 
 # -------------------------
-# Cálculo de radio de impacto
+# Intentar geolocalizar
 # -------------------------
-# Cada 10 m = 1 km de radio aproximado
-radio_km = tamano * 0.1
+geolocator = Nominatim(user_agent="meteor_app")
+lat, lon = None, None
 
-# Número de puntos para simular el círculo
+if lugar:
+    try:
+        location = geolocator.geocode(lugar)
+        if location:
+            lat, lon = location.latitude, location.longitude
+        else:
+            st.warning("No se encontró el lugar. Usa las coordenadas manuales.")
+    except:
+        st.warning("Error al conectar con geopy. Usa las coordenadas manuales.")
+
+# Si no hay coordenadas válidas, usar las manuales
+if lat is None or lon is None:
+    if manual_lat != 0.0 or manual_lon != 0.0:
+        lat, lon = manual_lat, manual_lon
+    else:
+        # fallback por defecto
+        st.info("Usando ubicación por defecto: Ciudad de México.")
+        lat, lon = 19.4326, -99.1332
+
+# -------------------------
+# Calcular radio de impacto
+# -------------------------
+radio_km = tamano * 0.1  # cada 10 m = 1 km aprox
+
+# -------------------------
+# Generar puntos para círculo de daño
+# -------------------------
 n_puntos = 500
 angles = np.random.rand(n_puntos) * 2 * np.pi
-r = np.random.rand(n_puntos) ** 0.5 * (radio_km / 111)  # 1° aprox = 111 km
+r = np.random.rand(n_puntos) ** 0.5 * (radio_km / 111)  # 1° ~ 111 km
 latitudes = lat + r * np.cos(angles)
 longitudes = lon + r * np.sin(angles)
 
-# Crear dataframe para el mapa (círculo de impacto)
 df = pd.DataFrame({
     "lat": latitudes,
     "lon": longitudes
@@ -44,7 +76,7 @@ st.write(f"**Radio estimado de impacto:** {radio_km:.1f} km")
 st.write(f"**Coordenadas:** {lat:.4f}, {lon:.4f}")
 
 # -------------------------
-# Mostrar mapa con círculo de impacto
+# Mostrar mapa
 # -------------------------
 st.map(df, zoom=6)
 
