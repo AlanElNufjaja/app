@@ -1,43 +1,52 @@
 # map.py
 import streamlit as st
-import pydeck as pdk
+import plotly.graph_objects as go
+import numpy as np
+import pandas as pd
 
 def mostrar_mapa(df, lat, lon, radio_km):
     """
-    Muestra un mapa 3D con Pydeck mostrando la zona de impacto.
-    
-    df: DataFrame con lat/lon de los puntos
-    lat, lon: centro del impacto
-    radio_km: radio del impacto en km (para la altura del cráter)
+    Muestra un globo terráqueo 3D con los puntos de impacto.
     """
-    # Creamos una nueva columna de altura según el radio
-    df['elevation'] = radio_km * 1000  # altura proporcional al radio
+    # Crear esfera (globo)
+    theta = np.linspace(0, 2*np.pi, 100)
+    phi = np.linspace(0, np.pi, 50)
+    theta, phi = np.meshgrid(theta, phi)
+    r = 1
+    x = r * np.sin(phi) * np.cos(theta)
+    y = r * np.sin(phi) * np.sin(theta)
+    z = r * np.cos(phi)
 
-    # Capa 3D tipo HexagonLayer
-    layer = pdk.Layer(
-        "HexagonLayer",
-        data=df,
-        get_position=["lon", "lat"],
-        auto_highlight=True,
-        radius=5000,  # radio de los hexágonos en metros
-        elevation_scale=50,  # escala de altura
-        pickable=True,
-        elevation_range=[0, 1000],
-        extruded=True,
+    # Crear figura
+    fig = go.Figure()
+
+    # Superficie del globo
+    fig.add_trace(go.Surface(x=x, y=y, z=z, colorscale='Blues', opacity=0.7, showscale=False))
+
+    # Convertir lat/lon a coordenadas 3D sobre la esfera
+    lat_rad = np.radians(90 - lat)
+    lon_rad = np.radians(lon)
+    x_impact = r * np.sin(lat_rad) * np.cos(lon_rad)
+    y_impact = r * np.sin(lat_rad) * np.sin(lon_rad)
+    z_impact = r * np.cos(lat_rad)
+
+    # Añadir punto de impacto
+    fig.add_trace(go.Scatter3d(
+        x=[x_impact],
+        y=[y_impact],
+        z=[z_impact],
+        mode='markers',
+        marker=dict(size=5 + radio_km/10, color='red'),
+        name='Impacto'
+    ))
+
+    fig.update_layout(
+        scene=dict(
+            xaxis=dict(visible=False),
+            yaxis=dict(visible=False),
+            zaxis=dict(visible=False),
+        ),
+        margin=dict(l=0, r=0, t=0, b=0)
     )
 
-    # Vista inicial centrada en el impacto
-    view_state = pdk.ViewState(
-        latitude=lat,
-        longitude=lon,
-        zoom=6,
-        pitch=45,
-        bearing=0
-    )
-
-    # Crear el deck
-    r = pdk.Deck(layers=[layer], initial_view_state=view_state, map_style='mapbox://styles/mapbox/light-v9')
-
-    # Mostrar en Streamlit
-    st.pydeck_chart(r)
-
+    st.plotly_chart(fig)
