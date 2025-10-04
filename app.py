@@ -4,6 +4,8 @@ import numpy as np
 import pydeck as pdk
 from geopy.geocoders import Nominatim
 
+pdk.settings.mapbox_api_key = "pk.eyJ1IjoiZXRjZXh0IiwiYSI6ImNqY2M2cDgzYTAxM3czMnA4MHBkZXc2YWYifQ.q3qKzNknz8JzKnHqX6o0nA"
+
 # -------------------------------------------------------------
 # CONFIGURACIÓN BÁSICA
 # -------------------------------------------------------------
