@@ -3,9 +3,9 @@ from geopy.geocoders import Nominatim
 
 def obtener_coordenadas(lugar="", manual_lat=0.0, manual_lon=0.0):
     """
-    Obtiene coordenadas usando geopy si hay nombre de lugar.
-    Si falla o no hay lugar, usa lat/lon manual.
-    Si tampoco hay, devuelve Ciudad de México.
+    Devuelve lat/lon de un lugar con geopy.
+    Si geopy falla o no hay lugar, usa lat/lon manual.
+    Si tampoco hay, usa Ciudad de México por defecto.
     """
     if lugar:
         try:
@@ -14,13 +14,13 @@ def obtener_coordenadas(lugar="", manual_lat=0.0, manual_lon=0.0):
             if location:
                 return location.latitude, location.longitude
         except:
-            pass
-    
-    # Usa lat/lon manual si están proporcionadas
+            pass  # falla geopy, sigue al fallback
+
+    # Lat/lon manual
     if manual_lat != 0.0 or manual_lon != 0.0:
         return manual_lat, manual_lon
-    
-    # fallback por defecto
+
+    # Fallback por defecto
     return 19.4326, -99.1332
 
 def calcular_radio(tamano):
