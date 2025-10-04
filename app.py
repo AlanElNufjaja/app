@@ -6,15 +6,17 @@ from map import mostrar_mapa
 
 st.set_page_config(page_title="Visualizador de Meteoritos ☄️", layout="centered")
 st.title("☄️ Visualizador de Impacto de Meteoritos")
-st.write("Simula el lugar donde cayó un meteorito y la zona de daño proporcional al tamaño 🌍")
+st.write("Simula el lugar donde caería un meteorito y la zona de daño proporcional al tamaño 🌍")
 
-# Entrada del usuario
+# Entradas
 st.sidebar.header("⚙️ Parámetros del impacto")
 lugar = st.sidebar.text_input("🌎 Lugar del impacto (ej. México, Tokyo):", "")
+manual_lat = st.sidebar.number_input("Latitud manual (opcional)", value=0.0, step=0.01)
+manual_lon = st.sidebar.number_input("Longitud manual (opcional)", value=0.0, step=0.01)
 tamano = st.sidebar.slider("Tamaño del meteoro (m)", 10, 500, 100)
 
 # Obtener coordenadas y calcular radio
-lat, lon = obtener_coordenadas(lugar)
+lat, lon = obtener_coordenadas(lugar, manual_lat, manual_lon)
 radio_km = calcular_radio(tamano)
 
 # Generar puntos de impacto
