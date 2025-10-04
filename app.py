@@ -4,6 +4,8 @@ from geopy.geocoders import Nominatim
 import folium
 from streamlit_folium import folium_static
 
+print ("Autistaldo tungtung sahur")
+
 st.set_page_config(page_title="Visualizador de Meteoros ☄️", layout="centered")
 st.title("☄️ Visualizador de Impacto Meteorítico")
 st.write("Simula el lugar donde caería un meteoro y su radio de impacto 🌍")
