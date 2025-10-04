@@ -2,8 +2,7 @@
 import streamlit as st
 from parameters import obtener_coordenadas, calcular_radio
 from damage import generar_puntos_circulo
-from mapa
-import mostrar_mapa
+from mapa import mostrar_mapa
 
 st.set_page_config(page_title="Visualizador de Meteoritos 3D ☄️", layout="centered")
 st.title("☄️ Visualizador de Impacto de Meteoritos 3D")
