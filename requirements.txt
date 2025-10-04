@@ -4,3 +4,4 @@ numpy
 pydeck
 geopy
 folium
+streamlit-folium
