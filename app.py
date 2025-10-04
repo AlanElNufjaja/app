@@ -1,29 +1,23 @@
-# app.py
 import streamlit as st
-import pandas as pd
 from parameters import obtener_coordenadas, calcular_radio
-from damage import generar_puntos_circulo
-from mapa import mostrar_mapa
 
-st.title("Visualizador de Impacto de Meteoritos 2D ☄️")
+st.title("Visualizador de Meteoritos 2D ☄️")
 
-# Entradas del usuario
-lugar = st.sidebar.text_input("Nombre del lugar (opcional)")
-manual_lat = st.sidebar.number_input("Latitud manual", value=0.0)
-manual_lon = st.sidebar.number_input("Longitud manual", value=0.0)
-tamano = st.sidebar.slider("Tamaño del meteoro (m)", 10, 500, 100)
+# Límites
+LAT_MIN, LAT_MAX = -90.0, 90.0
+LON_MIN, LON_MAX = -180.0, 180.0
 
-# Coordenadas
-lat, lon = obtener_coordenadas(lugar, manual_lat, manual_lon)
+# Inputs del usuario con límites
+lugar = st.sidebar.text_input("Nombre de la ciudad")
+lat_manual = st.sidebar.number_input("Latitud manual", value=19.4326, min_value=LAT_MIN, max_value=LAT_MAX)
+lon_manual = st.sidebar.number_input("Longitud manual", value=-99.1332, min_value=LON_MIN, max_value=LON_MAX)
+tamano = st.sidebar.slider("Tamaño del meteorito (m)", 10, 500, 100)
 
-# Radio y puntos
+# Obtener coordenadas usando Geopy + fallback a lat/lon manual
+lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
+
+# Calcular radio de impacto
 radio_km = calcular_radio(tamano)
-df = generar_puntos_circulo(lat, lon, radio_km, n_puntos=500)
 
-# Mostrar info
-st.write(f"Tamaño: {tamano} m")
-st.write(f"Radio estimado: {radio_km:.1f} km")
-st.write(f"Coordenadas: {lat:.4f}, {lon:.4f}")
-
-# Mostrar mapa 2D
-mostrar_mapa(df, lat, lon, radio_km)
+st.write(f"Coordenadas finales: {lat:.4f}, {lon:.4f}")
+st.write(f"Radio de impacto estimado: {radio_km:.1f} km")
