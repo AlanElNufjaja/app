@@ -10,7 +10,7 @@ st.write("Simula el lugar donde caería un meteorito y la zona de daño proporci
 
 # Entradas
 st.sidebar.header("⚙️ Parámetros del impacto")
-lugar = st.sidebar.text_input("🌎 Lugar del impacto (ej. México, Tokyo):", "")
+lugar = st.sidebar.text_input("🌎 Nombre del lugar (opcional):", "")
 manual_lat = st.sidebar.number_input("Latitud manual (opcional)", value=0.0, step=0.01)
 manual_lon = st.sidebar.number_input("Longitud manual (opcional)", value=0.0, step=0.01)
 tamano = st.sidebar.slider("Tamaño del meteoro (m)", 10, 500, 100)
