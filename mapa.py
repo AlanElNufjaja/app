@@ -1,8 +1,9 @@
-# map.py
+# globo.py
 import streamlit as st
 import pydeck as pdk
 
-pdk.settings.mapbox_api_key = "pk.eyJ1IjoiYWxhbmVsbnVmamFqYSIsImEiOiJjbWdjbjgwdmgwNXN0Mmtwdnh1c2lpcXI4In0.WacI81toXyjM10MlG4GIsw"
+# Tu token de Mapbox
+pdk.settings.mapbox_api_key = "pk.eyJ1IjoiYWxhbmVsamFqYSIsImEiOiJjbWdjbjgwdmgwNXN0Mmtwdnh1c2lpcXI4In0.WacI81toXyjM10MlG4GIsw"
 
 def mostrar_mapa(df, lat, lon, radio_km):
     """
@@ -11,7 +12,6 @@ def mostrar_mapa(df, lat, lon, radio_km):
     lat, lon: coordenadas del impacto
     radio_km: radio del impacto para escala de color
     """
-    # Capa tipo ScatterplotLayer
     layer = pdk.Layer(
         "ScatterplotLayer",
         data=df,
@@ -21,7 +21,6 @@ def mostrar_mapa(df, lat, lon, radio_km):
         pickable=True
     )
 
-    # Vista inicial centrada en el impacto
     view_state = pdk.ViewState(
         latitude=lat,
         longitude=lon,
@@ -29,7 +28,6 @@ def mostrar_mapa(df, lat, lon, radio_km):
         pitch=0
     )
 
-    # Crear Deck
     r = pdk.Deck(
         layers=[layer],
         initial_view_state=view_state,
