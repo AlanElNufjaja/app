@@ -6,8 +6,8 @@ from pyvista import examples
 st.title("🌍 Realistic 3D Earth Viewer")
 
 # Load Earth model
-mesh = pv.read("earth.obj")  # Replace with your downloaded model
-texture = pv.read_texture("earth_texture.jpg")
+mesh = pv.read("tierra.glb")  # Replace with your downloaded model
+texture = pv.read_texture("tierra.jpg")
 
 # Create plotter
 plotter = pv.Plotter(off_screen=True)
