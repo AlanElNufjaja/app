@@ -1,28 +1,42 @@
-# app.py
 import streamlit as st
-from parameters import obtener_coordenadas, calcular_radio
-from damage import generar_puntos_circulo
+from parameters import obtener_coordenadas
+from damage import generar_puntos_circulo, calcular_radio_impacto
 from mapa import mostrar_mapa
 
+st.set_page_config(layout="wide")
 st.title("Visualizador de Meteoritos 2D ☄️")
 
-# Parámetros del usuario
+# -------------------------
+# Panel lateral: entrada del usuario
+# -------------------------
 lugar = st.sidebar.text_input("Nombre de la ciudad")
-lat_manual = st.sidebar.slider("Latitud manual", -80, 80, 1)
-lon_manual = st.sidebar.slider("Longitud manual", -180, 180, 1)
-tamano = st.sidebar.slider("Tamaño del meteorito (m)", 10, 10000, 1)
+lat_manual = st.sidebar.slider("Latitud manual", -90, 90, 19)
+lon_manual = st.sidebar.slider("Longitud manual", -180, 180, -99)
 
+tamano = st.sidebar.slider("Diámetro del meteorito (m)", 10, 500, 100)
+masa = st.sidebar.slider("Masa (kg)", 100, 1_000_000, 1000)
+densidad = st.sidebar.slider("Densidad (kg/m³)", 100, 10_000, 3000)
+velocidad = st.sidebar.slider("Velocidad (m/s)", 1000, 100_000, 20000)
+
+# -------------------------
 # Obtener coordenadas
+# -------------------------
 lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
 
-# Calcular radio y generar puntos de impacto
-radio_km = calcular_radio(tamano)
-df = generar_puntos_circulo(lat, lon, radio_km, n_puntos=300)
+# -------------------------
+# Calcular radio y puntos
+# -------------------------
+radio_km = calcular_radio_impacto(tamano, masa, densidad, velocidad)
+df = generar_puntos_circulo(lat, lon, radio_km)
 
+# -------------------------
 # Mostrar info
-st.write(f"Tamaño del meteorito: {tamano} m")
-st.write(f"Radio estimado de impacto: {radio_km:.1f} km")
+# -------------------------
 st.write(f"Coordenadas: {lat:.4f}, {lon:.4f}")
+st.write(f"Diámetro: {tamano} m | Masa: {masa} kg | Densidad: {densidad} kg/m³ | Velocidad: {velocidad} m/s")
+st.write(f"Radio estimado de impacto: {radio_km:.2f} km")
 
-# Mostrar mapa 2D
+# -------------------------
+# Mostrar mapa
+# -------------------------
 mostrar_mapa(df, lat, lon, radio_km)
