@@ -1,19 +1,11 @@
-# damage.py
 import numpy as np
 import pandas as pd
 
 def generar_puntos_circulo(lat, lon, radio_km, n_puntos=500):
     """
-    Genera un DataFrame con puntos dentro de un círculo para simular la zona de daño del impacto.
+    Genera un DataFrame con n_puntos alrededor de lat/lon formando un círculo.
     """
-    angles = np.random.rand(n_puntos) * 2 * np.pi
-    r = np.random.rand(n_puntos) ** 0.5 * (radio_km / 111)  # 1° ≈ 111 km
-    latitudes = lat + r * np.cos(angles)
-    longitudes = lon + r * np.sin(angles)
-    
-    df = pd.DataFrame({
-        "lat": latitudes,
-        "lon": longitudes
-    })
-    
-    return df
+    angles = np.linspace(0, 2*np.pi, n_puntos)
+    lats = lat + (radio_km/111) * np.cos(angles)  # aprox grados
+    lons = lon + (radio_km/(111*np.cos(np.radians(lat)))) * np.sin(angles)
+    return pd.DataFrame({'lat': lats, 'lon': lons})
