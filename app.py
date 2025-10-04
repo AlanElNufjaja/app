@@ -32,7 +32,7 @@ df = generar_puntos_circulo(lat, lon, radio_km)
 # Mostrar info
 # -------------------------
 st.write(f"Coordenadas: {lat:.4f}, {lon:.4f}")
-st.write(f"Diámetro: {tamano} m | Densidad: {densidad} kg/m³ | Velocidad: {velocidad} m/s")
+st.write(f"Diámetro: {tamano} m | Densidad: {densidad} kg/m³ | Velocidad: {velocidadkms} km/s")
 st.write(f"Radio estimado de impacto: {radio_km:.2f} km")
 
 # -------------------------
