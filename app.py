@@ -59,7 +59,6 @@ lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
 
 # Calcular tamaño final (usando el valor ajustado de abrasión)
 tamano_final = perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial, factor_calor)
-tamano_final = tamano_final # evitar tamaños negativos
 
 # Calcular radio de impacto con tamaño reducido (ahora todo en km)
 radio_km = calcular_radio_impacto(tamano_final, densidad, velocidad_kms)
