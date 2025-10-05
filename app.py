@@ -8,6 +8,11 @@ from red import perdida_tamano_meteorito  # 🔹 función adaptada a km
 
 st.title("Visualizador de Meteoritos 2D ☄️")
 
+g = 9.81  # m/s²
+DENSIDAD_ROCA = 2700
+DENSIDAD_BLANDA = 1800
+DENSIDAD_AGUA = 1000
+
 # ======================
 # Cargar datos
 # ======================
