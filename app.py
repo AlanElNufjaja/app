@@ -114,7 +114,7 @@ url_externa = "https://appgit-nmfd77m9kjolnscbbubqzg.streamlit.app"
 col_a, col_b, col_c = st.columns([1, 3, 1])
 with col_b:
     st.link_button(
-        "🚀 Ir a la App",
+        "🚀 Ir al simulador de daños",
         url_externa,
         use_container_width=True,
         type="primary"
