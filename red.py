@@ -14,7 +14,7 @@ def perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial):
     factor_calor = 1e-8             # constante de pérdida (ajustable)
     
     # Energía cinética por unidad de volumen (simplificada)
-    energia = 0.5 * densidad * (velocidad**2)
+    energia = 0.5 * densidad * (velocidad_kms**2)
     
     # Pérdida estimada de masa (proporcional a energía y área)
     area = 3.1416 * (tamano_inicial / 2)**2
