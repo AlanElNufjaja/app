@@ -94,6 +94,7 @@ st.write(f"**Tamaño final tras entrar a la atmósfera:** {tamano_final:.6f} km"
 st.write(f"**Densidad:** {densidad} kg/m³")
 st.write(f"**Velocidad de impacto:** {velocidad_kms:.2f} km/s")
 st.write(f"**Radio estimado de impacto:** {radio_km:.3f} km")
+st.write(f"**Profundidad de impacto:** {profundida_m:.3f} km")
 st.write(f"**Coordenadas:** {lat:.4f}, {lon:.4f}")
 
 # ======================
