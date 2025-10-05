@@ -62,6 +62,23 @@ tamano_final = max(tamano_final, 0.0001)  # evitar tamaños negativos
 radio_km = calcular_radio_impacto(tamano_final, densidad, velocidad_kms)
 radio_km = max(radio_km, 0.01)  # asegurar visibilidad en el mapa
 
+  energia_joules = 0.5 * densidad_ast * (4/3 * np.pi * radio_ast**3) * velocidad_ms**2
+
+if material == "Roca dura":
+    diametro_m = 0.1 * (energia_joules / (DENSIDAD_ROCA * g))**0.25
+    profundidad_m = diametro_m / 5
+    radio_km = max(diametro_m / 2 * ESCALA_IMPACTO, 0.05)
+
+elif material == "Tierra blanda":
+    diametro_m = 0.1 * (energia_joules / (DENSIDAD_ROCA * g))**0.25 * 1.15
+    profundidad_m = (0.1 * (energia_joules / (DENSIDAD_ROCA * g))**0.25 / 5) * 0.70
+    radio_km = max(diametro_m / 2 * ESCALA_IMPACTO, 0.05)
+
+else:  # Agua
+    diametro_m = 0.2 * (energia_joules / (DENSIDAD_AGUA * g))**(1/3) / radio_ast
+    profundidad_m = diametro_m
+    radio_km = max(diametro_m * ESCALA_IMPACTO, 0.05)
+        
 # Generar puntos de impacto
 df = generar_puntos_circulo(lat, lon, radio_km)
 
