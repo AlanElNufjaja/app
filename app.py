@@ -48,6 +48,9 @@ velocidad_kms = st.sidebar.slider("Velocidad (km/s)", 1.0, 30.0, float(velocidad
 material = st.sidebar.selectbox(
     "Selecciona el material del impacto",
     ["Roca dura", "Tierra blanda", "Agua"])
+tipodano = st.sidebar.selectbox(
+    "Tipo de daño",
+    ["Imapacto y crater", "Bola de fuego", "Sonido","Terremotos"])
 # 🔹 Ajuste opcional del factor de abrasión atmosférica
 factor_calor = (2.3e-2)  # ajustado para km
 st.sidebar.write(f"Constante de calor: {factor_calor:.1e}")
