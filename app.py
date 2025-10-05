@@ -49,7 +49,7 @@ material = st.sidebar.selectbox(
     "Selecciona el material del impacto",
     ["Roca dura", "Tierra blanda", "Agua"])
 # 🔹 Ajuste opcional del factor de abrasión atmosférica
-factor_calor = (10 ** -10)*100  # ajustado para km
+factor_calor = (10)  # ajustado para km
 st.sidebar.write(f"Constante de calor: {factor_calor:.1e}")
 
 # ======================
@@ -65,7 +65,7 @@ tamano_final = max(tamano_final, 0.000)  # evitar tamaños negativos
 radio_km = calcular_radio_impacto(tamano_final, densidad, velocidad_kms)
 radio_km = max(radio_km, 0.0)  # asegurar visibilidad en el mapa
 
-energia = (0.5 * densidad * (4/3 * np.pi * radio_km**3) * velocidad_kms**2)/4.184e+15
+energia = (0.5 * densidad * (4/3 * np.pi * radio_km**3) * velocidad_kms**2)
 
 if material == "Roca dura":
     profundidad_m = radio_km*2 / 5
