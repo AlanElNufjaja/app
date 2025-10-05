@@ -110,4 +110,8 @@ with col2:
     st.write(f"**Impact depth:** {profundidad_m:.3f} km")
     st.write(f"**Coordinates:** {lat:.4f}, {lon:.4f}")
 
+url_externa = "https://appgit-nmfd77m9kjolnscbbubqzg.streamlit.app"
+st.link_button("🚀 Ir a la App de Simulación de Impactos", url_externa, type="primary")
+st.info("Al hacer clic en el botón, la aplicación se abrirá en una nueva pestaña.")
+
 mostrar_mapa(df, lat, lon, radio_km,tipodano)
