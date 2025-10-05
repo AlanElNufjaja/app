@@ -8,6 +8,14 @@ def mostrar_mapa(df, lat, lon, radio_km):
     rojo = impacto directo, naranja = cráter, amarillo = contaminación.
     """
     # Capas para cada zona
+    capa_negra = pdk.Layer(
+        "ScatterplotLayer",
+        data=df,
+        get_position=["lon", "lat"],
+        get_color=[255, 255, 255, 160],  # rojo
+        get_radius=radio_km,
+        pickable=False
+        
     capa_rojo = pdk.Layer(
         "ScatterplotLayer",
         data=df,
