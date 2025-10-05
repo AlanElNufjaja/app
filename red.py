@@ -11,7 +11,7 @@ def perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial, factor_cal
     if densidad < 2000 and velocidad_kms > 0.5:  # Umbral para meteoritos de baja densidad y veloces
         perdida_tamano *= 1.5
     if velocidad_kms > 10:  # Umbral para velocidades muy altas
-        perdida_tamano *= 2
+        perdida_tamano *= 1.2
 
     # Limitar pérdida máxima relativa al tamaño
     perdida_tamano = min(perdida_tamano, tamano_inicial)  # Desintegración total si la pérdida es mayor que el tamaño
