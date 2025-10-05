@@ -8,42 +8,110 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
     rojo = impacto directo, naranja = cráter, amarillo = contaminación.
     """
     radio_km *=50
-    # Capas para cada zona
-    capa_negra = pdk.Layer(
-        "ScatterplotLayer",
-        data=df,
-        get_position=["lon", "lat"],
-        get_color=[0, 0, 0, 255],  # rojo
-        get_radius=radio_km,
-        pickable=False
-    )
-    capa_rojo = pdk.Layer(
-        "ScatterplotLayer",
-        data=df,
-        get_position=["lon", "lat"],
-        get_color=[255, 0, 0, 160],  # rojo
-        get_radius=radio_km*12.5,
-        pickable=False
-    )
 
-    capa_naranja = pdk.Layer(
-        "ScatterplotLayer",
-        data=df,
-        get_position=["lon", "lat"],
-        get_color=[255, 165, 0, 120],  # naranja
-        get_radius=radio_km * 500,
-        pickable=False
-    )
+    if tipodano=="Impacto y crater"
+        capa_negra = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[0, 0, 0, 255], 
+            get_radius=radio_km,
+            pickable=False
+        )
+        capa_rojo = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[255, 0, 0, 160],  # rojo
+            get_radius=radio_km*12.5,
+            pickable=False
+        )
+    elif tipodano=="Bola de fuego" 
+        capa_rojo = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[255, 0, 0, 160],
+            get_radius=radio_km*12.5,
+            pickable=False
+        )
+        capa_naranja = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[255, 40, 40, 120],
+            get_radius=radio_km * 500,
+            pickable=False
+        )
 
-    capa_amarillo = pdk.Layer(
-        "ScatterplotLayer",
-        data=df,
-        get_position=["lon", "lat"],
-        get_color=[255, 255, 0, 80],  # amarillo
-        get_radius=radio_km * 3 * 1000,
-        pickable=False
-    )
+        capa_amarillo = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[255, 90, 54, 80],
+            get_radius=radio_km * 750,
+            pickable=False
+        )
+    elif tipodano=="Sonido"
+        capa_negra = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[16, 16, 148, 180],
+            get_radius=radio_km * 750,
+            pickable=False
+        capa_rojo = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[36, 36, 169, 80],  # amarillo
+            get_radius=radio_km * 750,
+            pickable=False
+        capa_naranja = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[62, 62, 194, 80],  # amarillo
+            get_radius=radio_km * 750,
+            pickable=False
+        capa_amarillo = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[111, 111, 209, 80],  # amarillo
+            get_radius=radio_km * 750,
+            pickable=False
 
+    elif tipodano=="Terremotos"
+        capa_negra = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[151, 31, 22, 180],
+            get_radius=radio_km * 750,
+            pickable=False
+        capa_rojo = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[209, 21, 7, 80],  # amarillo
+            get_radius=radio_km * 750,
+            pickable=False
+        capa_naranja = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[225, 58, 45, 80],  # amarillo
+            get_radius=radio_km * 750,
+            pickable=False
+        capa_amarillo = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[221, 124, 117, 80],  # amarillo
+            get_radius=radio_km * 750,
+            pickable=False
+            
     view_state = pdk.ViewState(
         latitude=lat,
         longitude=lon,
