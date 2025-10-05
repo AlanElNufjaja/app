@@ -43,7 +43,7 @@ lat_manual = st.sidebar.slider("Latitud manual", float(-80), float(80), 19.44, s
 lon_manual = st.sidebar.slider("Longitud manual", float(-180), float(180), -99.1, step=0.0001)
 
 tamano_inicial = st.sidebar.slider("Tamaño del meteorito (km)", 0.0, 10.0, float(tamano_inicial), 0.0001)
-densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, int(densidad))
+densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, 3000)
 velocidad_kms = st.sidebar.slider("Velocidad (km/s)", 1.0, 30.0, float(velocidad_kms), 0.1)
 material = st.sidebar.selectbox(
     "Selecciona el material del impacto",
