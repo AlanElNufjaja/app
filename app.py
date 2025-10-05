@@ -1,10 +1,9 @@
 import streamlit as st
 import pandas as pd
-from parameters import obtener_coordenadas
+from parameters import obtener_coordenadas, velocidad_realista, calcular_radio_impacto
 from damage import generar_puntos_circulo
 from mapa import mostrar_mapa
-from red import perdida_tamano_meteorito
-from calculos import calcular_energia, impacto_roca_dura, impacto_tierra_blanda, impacto_agua
+from red import perdida_tamano_meteorito  # 🔹 importamos la función externa
 
 st.title("Visualizador de Meteoritos 2D ☄️")
 
@@ -13,70 +12,55 @@ st.title("Visualizador de Meteoritos 2D ☄️")
 # ======================
 datos_base = pd.read_csv("datos_base.csv")
 datos_limpios = pd.read_csv("datos_limpios.csv")
-meteoritos = pd.concat([datos_base, datos_limpios], axis=1)
 
+# Combinar datos para acceder a tamaño y velocidad
+meteoritos = pd.concat([datos_base, datos_limpios], axis=1)
 opciones = meteoritos['id'].astype(str).tolist()
 meteorito_seleccionado = st.sidebar.selectbox("Selecciona un meteorito", opciones)
+
 mete = meteoritos[meteoritos['id'].astype(str) == meteorito_seleccionado].iloc[0]
 
 # ======================
-# Datos iniciales del meteorito
+# Datos predeterminados del meteorito
 # ======================
 tamano_inicial = (
     (mete['estimated_diameter.kilometers.estimated_diameter_min'] +
      mete['estimated_diameter.kilometers.estimated_diameter_max']) / 2
 ) * 1000  # km → m
 
-densidad_default = 3000  # kg/m³
-velocidad_default = mete['relative_velocity.kilometers_per_second']
+densidad = 3000  # kg/m³ estándar
+velocidad_kms = mete['relative_velocity.kilometers_per_second']
 
 # ======================
 # Entradas del usuario
 # ======================
 lugar = st.sidebar.text_input("Nombre de la ciudad")
-lat_manual = st.sidebar.slider("Latitud manual", -80.0, 80.0, 19.44, step=0.0001)
-lon_manual = st.sidebar.slider("Longitud manual", -180.0, 180.0, -99.1, step=0.0001)
-
+lat_manual = st.sidebar.slider("Latitud manual", float(-80), float(80), 19.44, step=0.0001)
+lon_manual = st.sidebar.slider("Longitud manual", float(-180), float(180), -99.1, step=0.0001)
+velocidad_kms = st.sidebar.slider("Velocidad(Kms", 1, 30, 7)
 tamano_inicial = st.sidebar.slider("Tamaño del meteorito (m)", 0.1, 500.0, float(tamano_inicial))
-densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, int(densidad_default))
-velocidad_kms = st.sidebar.slider("Velocidad (km/s)", 1.0, 30.0, float(velocidad_default), 0.1)
+densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, int(densidad))
 
+# 🔹 Ajuste opcional del factor de abrasión atmosférica
 exp_factor = st.sidebar.slider(
     "Nivel de abrasión atmosférica (potencia de 10)",
-    -9.0, -6.0, -7.0, step=0.1
+    -9.0, -7.5, -9.0, step=0.01
 )
-factor_calor = 10 ** exp_factor * 1e-4
+factor_calor = (10 ** exp_factor)*100
 st.sidebar.write(f"Constante actual: {factor_calor:.1e}")
-
-material = st.sidebar.selectbox("Superficie de impacto", ["Roca dura", "Tierra blanda", "Agua"])
-
 # ======================
 # Cálculos principales
 # ======================
 lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
+
+# Convertir velocidad de km/s a m/s
 velocidad_ms = velocidad_kms * 1000
 
-# Calcular tamaño final tras abrasión atmosférica
+# Calcular tamaño final (usando el valor ajustado de abrasión)
 tamano_final = perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial, factor_calor)
 
-# Energía del meteorito
-masa, ek_joules, ek_megatones = calcular_energia(tamano_final / 2, velocidad_ms, densidad)
-
-# ------------------------
-# Impacto según material
-# ------------------------
-ESCALA_IMPACTO = 1.0 / 1000  # metros → km para Folium
-
-if material == "Roca dura":
-    diametro, profundidad = impacto_roca_dura(ek_joules)
-    radio_km = max(diametro / 2 * ESCALA_IMPACTO, 0.05)
-elif material == "Tierra blanda":
-    diam_roca, prof_roca = impacto_roca_dura(ek_joules)
-    diametro, profundidad = impacto_tierra_blanda(diam_roca, prof_roca)
-    radio_km = max(diametro / 2 * ESCALA_IMPACTO, 0.05)
-else:  # Agua
-    altura = impacto_agua(ek_joules, tamano_final / 2)
-    radio_km = max(altura * ESCALA_IMPACTO * 2, 0.05)
+# Calcular radio de impacto con tamaño reducido
+radio_km = calcular_radio_impacto(tamano_final, densidad, velocidad_kms)
 
 # Generar puntos de impacto
 df = generar_puntos_circulo(lat, lon, radio_km)
@@ -85,23 +69,15 @@ df = generar_puntos_circulo(lat, lon, radio_km)
 # Mostrar resultados
 # ======================
 st.subheader("🔍 Resultados de la simulación")
+
 st.write(f"**Tamaño inicial:** {tamano_inicial:.2f} m")
 st.write(f"**Tamaño final tras entrar a la atmósfera:** {tamano_final:.2f} m")
 st.write(f"**Densidad:** {densidad} kg/m³")
 st.write(f"**Velocidad de impacto:** {velocidad_kms:.2f} km/s")
-st.write(f"**Material de impacto:** {material}")
-
-if material in ["Roca dura", "Tierra blanda"]:
-    st.write(f"**Diámetro estimado del cráter:** {diametro:.2f} m")
-    st.write(f"**Profundidad estimada del cráter:** {profundidad:.2f} m")
-else:
-    st.write(f"**Altura inicial de la columna de agua:** {altura:.2f} m")
-
-st.write(f"**Radio estimado de impacto para mapa:** {radio_km:.2f} km")
+st.write(f"**Radio estimado de impacto:** {radio_km:.2f} km")
 st.write(f"**Coordenadas:** {lat:.4f}, {lon:.4f}")
 
 # ======================
 # Mostrar mapa
 # ======================
-st.subheader("🗺️ Mapa de impacto")
 mostrar_mapa(df, lat, lon, radio_km)
