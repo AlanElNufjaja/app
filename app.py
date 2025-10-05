@@ -135,4 +135,4 @@ with col_b:
     )
 st.write("---")
 
-mostrar_mapa(df, lat, lon, radio_km*50,tipodano)
+mostrar_mapa(df, lat, lon, radio_km,tipodano)
