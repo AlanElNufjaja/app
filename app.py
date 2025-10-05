@@ -111,6 +111,14 @@ with col2:
     st.write(f"**Coordinates:** {lat:.4f}, {lon:.4f}")
 
 url_externa = "https://appgit-nmfd77m9kjolnscbbubqzg.streamlit.app"
-st.link_button("🚀 Ir a la App de Simulación de Impactos", url_externa, type="primary")
+col1, col2, col3 = st.columns([1, 3, 1])
+with col2:
+    st.link_button(
+        "🚀 Ir a la App (Centrado)",
+        url_externa,
+        use_container_width=True,
+        type="primary"
+    )
+st.write("---")
 
 mostrar_mapa(df, lat, lon, radio_km,tipodano)
