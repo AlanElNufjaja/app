@@ -11,7 +11,7 @@ from PIL import Image
 img = Image.open("Logo1.png")
 
 # Muestra la imagen con un ancho específico
-col1, col2, col3 = st.columns([1,3,3])
+col1, col2, col3 = st.columns([1,3,2])
 with col2:
     st.image(img, use_container_width=True)
 
