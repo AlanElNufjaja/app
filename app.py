@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 from parameters import obtener_coordenadas, calcular_radio_impacto
 from damage import generar_puntos_circulo
 from mapa import mostrar_mapa
