@@ -92,14 +92,22 @@ radio_km /= 50
 # ======================
 # Mostrar resultados
 # ======================
-st.subheader(" Simulation results")
-st.write(f"**Initial size:** {tamano_inicial:.6f} km")
-st.write(f"**Final size after atmospheric entry:** {tamano_final:.6f} km")
-st.write(f"**Density:** {densidad} kg/m³")
-st.write(f"**Impact velocity:** {velocidad_kms:.2f} km/s")
-st.write(f"**Crater radius:** {radio_km:.3f} km")
-st.write(f"**Impact depth:** {profundidad_m:.3f} km")
-st.write(f"**Impact energy:** {energia:.3f} MT")
-st.write(f"**Coordinates:** {lat:.4f}, {lon:.4f}")
+col0, col1, col2 = st.columns([1, 2, 1])
+with col1:
+    st.subheader("Simulation results")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.write(f"**Initial size:** {tamano_inicial:.6f} km")
+    st.write(f"**Density:** {densidad} kg/m³")
+    st.write(f"**Impact velocity:** {velocidad_kms:.2f} km/s")
+    st.write(f"**Impact energy:** {energia:.3f} MT")
+
+with col2:
+    st.write(f"**Final size after atmospheric entry:** {tamano_final:.6f} km")
+    st.write(f"**Crater radius:** {radio_km:.3f} km")
+    st.write(f"**Impact depth:** {profundidad_m:.3f} km")
+    st.write(f"**Coordinates:** {lat:.4f}, {lon:.4f}")
 
 mostrar_mapa(df, lat, lon, radio_km,tipodano)
