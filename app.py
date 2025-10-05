@@ -128,6 +128,8 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+st.write("---")
+
 url_externa = "https://appgit-nmfd77m9kjolnscbbubqzg.streamlit.app"
 col_a, col_b, col_c = st.columns([1, 3, 1])
 with col_b:
