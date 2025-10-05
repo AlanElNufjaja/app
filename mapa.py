@@ -52,7 +52,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[255, 165, 0, 120],
+            get_color=[255, 165, 0, 80],
             get_radius=radio_km * 250,
             pickable=False,
             get_line_color=[255, 165, 0, 255],  
