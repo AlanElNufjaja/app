@@ -9,53 +9,55 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[0, 0, 0, 255], 
+            get_color=[0, 0, 0, 150], 
             get_radius=radio_km,
-            pickable=False
+            pickable=False,
+            get_line_color=[0, 0, 0, 255],  # Borde negro
+            get_line_width=1
         )
         capa_rojo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[255, 0, 0, 160],  
+            get_color=[255, 0, 0, 100],  
             get_radius=radio_km*12.5,
-            pickable=False
+            pickable=False,
+            get_line_color=[255, 0, 0, 255],  # Borde rojo
+            get_line_width=1
         )
         layers = [capa_negra, capa_rojo]
         
     elif tipodano == "Bola de fuego": 
-        capa_negra = pdk.Layer(
-            "ScatterplotLayer",
-            data=df,
-            get_position=["lon", "lat"],
-            get_color=[255, 0, 0, 200],
-            get_radius=radio_km*50,
-            pickable=False
-        )
         capa_rojo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[255, 20, 20, 140],
-            get_radius=radio_km*250,
-            pickable=False
+            get_color=[255, 0, 0, 150],
+            get_radius=radio_km*50,
+            pickable=False,
+            get_line_color=[255, 0, 0, 255],  # Borde rojo
+            get_line_width=1
         )
         capa_naranja = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[255, 40, 40, 120],
-            get_radius=radio_km * 500,
-            pickable=False
+            get_color=[255, 165, 0, 120],
+            get_radius=radio_km * 250,
+            pickable=False,
+            get_line_color=[255, 165, 0, 255],  # Borde naranja
+            get_line_width=1
         )
 
         capa_amarillo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[255, 90, 54, 80],
-            get_radius=radio_km * 750,
-            pickable=False
+            get_color=[255, 255, 0, 80],
+            get_radius=radio_km * 500,
+            pickable=False,
+            get_line_color=[255, 255, 0, 255],  # Borde amarillo
+            get_line_width=1
         )
         layers = [capa_rojo, capa_naranja, capa_amarillo]
 
@@ -64,33 +66,41 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[16, 16, 148, 180],
+            get_color=[0, 0, 255, 100],
             get_radius=radio_km * 750,
-            pickable=False
+            pickable=False,
+            get_line_color=[0, 0, 0, 255],  # Borde negro
+            get_line_width=1
         )
         capa_rojo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[36, 36, 169, 80],  
+            get_color=[0, 0, 200, 80],  
             get_radius=radio_km * 750,
-            pickable=False
+            pickable=False,
+            get_line_color=[0, 0, 200, 255],  # Borde azul
+            get_line_width=1
         )
         capa_naranja = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[62, 62, 194, 80],  
+            get_color=[0, 128, 255, 80],  
             get_radius=radio_km * 750,
-            pickable=False
+            pickable=False,
+            get_line_color=[0, 128, 255, 255],  # Borde azul claro
+            get_line_width=1
         )
         capa_amarillo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[111, 111, 209, 80],  
+            get_color=[128, 255, 255, 80],  
             get_radius=radio_km * 750,
-            pickable=False
+            pickable=False,
+            get_line_color=[128, 255, 255, 255],  # Borde celeste
+            get_line_width=1
         )
         layers = [capa_negra, capa_rojo, capa_naranja, capa_amarillo]
 
@@ -99,33 +109,41 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[151, 31, 22, 180],
+            get_color=[139, 0, 0, 150],
             get_radius=radio_km * 750,
-            pickable=False
+            pickable=False,
+            get_line_color=[139, 0, 0, 255],  # Borde marrón
+            get_line_width=1
         )
         capa_rojo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[209, 21, 7, 80],  
+            get_color=[255, 0, 0, 100],  
             get_radius=radio_km * 750,
-            pickable=False
+            pickable=False,
+            get_line_color=[255, 0, 0, 255],  # Borde rojo
+            get_line_width=1
         )
         capa_naranja = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[225, 58, 45, 80],  
+            get_color=[255, 165, 0, 80],  
             get_radius=radio_km * 750,
-            pickable=False
+            pickable=False,
+            get_line_color=[255, 165, 0, 255],  # Borde naranja
+            get_line_width=1
         )
         capa_amarillo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[221, 124, 117, 80],  
+            get_color=[255, 255, 0, 80],  
             get_radius=radio_km * 750,
-            pickable=False
+            pickable=False,
+            get_line_color=[255, 255, 0, 255],  # Borde amarillo
+            get_line_width=1
         )
         layers = [capa_negra, capa_rojo, capa_naranja, capa_amarillo]
 
