@@ -112,17 +112,21 @@ with col2:
 
 def evaluar_gravedad_impacto(energia, radio_km):
     if energia > 1000:
-        return "**Critical damage**: The impact would cause massive destruction and widespread devastation."
+        return "**Critical damage**: The impact would cause massive destruction and widespread devastation.", "danger"
     elif energia > 100:
-        return "**Severe damage**: The impact would cause significant damage and potential loss of life."
+        return "**Severe damage**: The impact would cause significant damage and potential loss of life.", "warning"
     elif radio_km*50 > 10:
-        return "**Moderate damage**: The impact would cause noticeable damage, but it would likely be contained."
+        return "**Moderate damage**: The impact would cause noticeable damage, but it would likely be contained.", "info"
     else:
-        return "**Minimal damage**: The impact would likely cause little to no significant damage."
+        return "**Minimal damage**: The impact would likely cause little to no significant damage.", "success"
 
-gravedad_impacto = evaluar_gravedad_impacto(energia, radio_km)
+gravedad_impacto, color = evaluar_gravedad_impacto(energia, radio_km)
 
-st.write(gravedad_impacto)
+st.markdown(f"""
+<div style="background-color: {'#f44336' if color == 'danger' else '#ff9800' if color == 'warning' else '#2196f3' if color == 'info' else '#4caf50'}; padding: 10px; border-radius: 5px; color: white;">
+    {gravedad_impacto}
+</div>
+""", unsafe_allow_html=True)
 
 url_externa = "https://appgit-nmfd77m9kjolnscbbubqzg.streamlit.app"
 col_a, col_b, col_c = st.columns([1, 3, 1])
