@@ -38,7 +38,7 @@ lugar = st.sidebar.text_input("Nombre de la ciudad")
 lat_manual = st.sidebar.slider("Latitud manual", float(-80), float(80), 19.44, step=0.0001)
 lon_manual = st.sidebar.slider("Longitud manual", float(-180), float(180), -99.1, step=0.0001)
 velocidad_kms = st.sidebar.slider("Velocidad(Kms", 1, 30, 7)
-tamano_inicial = st.sidebar.slider("Tamaño del meteorito (km)", 0.1, 500.0, float(tamano_inicial))
+tamano_inicial = st.sidebar.slider("Tamaño del meteorito (m)", 0.1, 500.0, float(tamano_inicial))
 densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, int(densidad))
 
 # 🔹 Ajuste opcional del factor de abrasión atmosférica
