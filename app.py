@@ -127,6 +127,7 @@ st.markdown(f"""
     {gravedad_impacto}
 </div>
 """, unsafe_allow_html=True)
+st.write("---")
 
 mostrar_mapa(df, lat, lon, radio_km,tipodano)
 
@@ -141,4 +142,3 @@ with col_b:
         use_container_width=True,
         type="primary"
     )
-st.write("---")
