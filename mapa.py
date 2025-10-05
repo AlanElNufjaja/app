@@ -7,6 +7,7 @@ def mostrar_mapa(df, lat, lon, radio_km):
     Muestra un mapa 2D interactivo con Pydeck con zonas de impacto coloreadas:
     rojo = impacto directo, naranja = cráter, amarillo = contaminación.
     """
+    radio_km *=10
     # Capas para cada zona
     capa_negra = pdk.Layer(
         "ScatterplotLayer",
