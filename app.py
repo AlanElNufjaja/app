@@ -72,7 +72,7 @@ radio_km = max(radio_km, 0.01)  # asegurar visibilidad en el mapa
 energia_joules = 0.5 * densidad * (4/3 * np.pi * radio_km**3) * velocidad_kms**2
 
 if material == "Roca dura":
-    profundidad_m = diametro_m / 5
+    profundidad_m = radio_km*2 / 5
 
 elif material == "Tierra blanda":
     diametro_m = 0.1 * (energia_joules / (DENSIDAD_ROCA * g))**0.25 * 1.15
