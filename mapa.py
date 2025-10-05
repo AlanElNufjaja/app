@@ -28,7 +28,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
         layers = [capa_negra, capa_rojo]
         
     elif tipodano == "Bola de fuego": 
-         capa_negra = pdk.Layer(
+        capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
