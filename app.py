@@ -43,7 +43,7 @@ densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, int(densidad))
 velocidad_kms = st.sidebar.slider("Velocidad (km/s)", 1.0, 30.0, float(velocidad_kms), 0.1)
 Material = st.sidebar.selectbox(
     "Selecciona el material del impacto",
-    ["Roca dura", "Tierra Blanda", "Agua"]
+    ["Roca dura", "Tierra Blanda", "Agua"])
 # 🔹 Ajuste opcional del factor de abrasión atmosférica
 exp_factor = st.sidebar.slider(
     "Nivel de abrasión atmosférica (potencia de 10)",
