@@ -69,7 +69,7 @@ tamano_final = max(tamano_final, 0.000)  # evitar tamaños negativos
 radio_km = calcular_radio_impacto(tamano_final, densidad, velocidad_kms)
 radio_km = max(radio_km, 0.0)  # asegurar visibilidad en el mapa
 
-energia_joules = 0.5 * densidad * (4/3 * np.pi * radio_km**3) * velocidad_kms**2
+energia = (0.5 * densidad * (4/3 * np.pi * radio_km**3) * velocidad_kms**2)/4.184e+15
 
 if material == "Roca dura":
     profundidad_m = radio_km*2 / 5
@@ -95,6 +95,7 @@ st.write(f"**Densidad:** {densidad} kg/m³")
 st.write(f"**Velocidad de impacto:** {velocidad_kms:.2f} km/s")
 st.write(f"**Radio estimado de impacto:** {radio_km:.3f} km")
 st.write(f"**Profundidad de impacto:** {profundidad_m:.3f} km")
+st.write(f"**Energia del impacto:** {energia:.3f} km")
 st.write(f"**Coordenadas:** {lat:.4f}, {lon:.4f}")
 
 # ======================
