@@ -5,8 +5,15 @@ from parameters import obtener_coordenadas, calcular_radio_impacto
 from damage import generar_puntos_circulo
 from mapa import mostrar_mapa
 from red import perdida_tamano_meteorito  
+from PIL import Image
 
-st.image("LOGO1-removebg-preview.png")
+# Carga la imagen
+img = Image.open("")
+
+# Muestra la imagen con un ancho específico
+col1, col2, col3 = st.columns([1,3,1])
+with col2:
+    st.image(img, use_column_width=True)
 
 g = 9.81  # m/s²
 DENSIDAD_ROCA = 2700
