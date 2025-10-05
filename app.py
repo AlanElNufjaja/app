@@ -4,7 +4,8 @@ from parameters import obtener_coordenadas
 from damage import generar_puntos_circulo
 from mapa import mostrar_mapa
 from red import perdida_tamano_meteorito
-from calculos import calcular_lista_impacto
+
+from calculos import calcular_energia, impacto_roca_dura, impacto_tierra_blanda, impacto_agua
 
 st.title("Visualizador de Meteoritos 2D ☄️")
 
@@ -56,16 +57,20 @@ velocidad_ms = velocidad_kms * 1000
 # Pérdida de tamaño
 tamano_final = perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial, factor_calor)
 
-# ------------------------
-# Impacto según material
-# ------------------------
-impactos = calcular_lista_impacto(tamano_final / 2, velocidad_ms, densidad)  # radio = tamano_final/2
-impacto_seleccionado = next((i for i in impactos if i["tipo"] == material), None)
+# Calcular energía del meteorito
+masa, ek_joules, ek_megatones = calcular_energia(tamano_final / 2, velocidad_ms, densidad)  # radio = tamano/2
 
-if material in ["Roca dura", "Tierra blanda"]:
-    radio_km = (impacto_seleccionado["diametro_m"] / 2) / 1000  # m → km
+# Impacto según material
+if material == "Roca dura":
+    diametro, profundidad = impacto_roca_dura(ek_joules)
+    radio_km = diametro / 2 / 1000
+elif material == "Tierra blanda":
+    diam_roca, prof_roca = impacto_roca_dura(ek_joules)
+    diametro, profundidad = impacto_tierra_blanda(diam_roca, prof_roca)
+    radio_km = diametro / 2 / 1000
 else:  # Agua
-    radio_km = impacto_seleccionado["altura_columna_m"] / 1000
+    altura = impacto_agua(ek_joules, tamano_final / 2)
+    radio_km = altura / 1000  # Escala simple
 
 # Generar puntos para mapa
 df = generar_puntos_circulo(lat, lon, radio_km)
@@ -81,10 +86,10 @@ st.write(f"**Velocidad de entrada:** {velocidad_kms:.2f} km/s")
 st.write(f"**Material de impacto:** {material}")
 
 if material in ["Roca dura", "Tierra blanda"]:
-    st.write(f"**Diámetro estimado:** {impacto_seleccionado['diametro_m']:.2f} m")
-    st.write(f"**Profundidad estimada:** {impacto_seleccionado['profundidad_m']:.2f} m")
+    st.write(f"**Diámetro estimado:** {diametro:.2f} m")
+    st.write(f"**Profundidad estimada:** {profundidad:.2f} m")
 else:
-    st.write(f"**Altura inicial de la columna de agua:** {impacto_seleccionado['altura_columna_m']:.2f} m")
+    st.write(f"**Altura inicial de la columna de agua:** {altura:.2f} m")
 
 st.write(f"**Radio estimado de impacto para mapa:** {radio_km:.2f} km")
 st.write(f"**Coordenadas:** {lat:.4f}, {lon:.4f}")
