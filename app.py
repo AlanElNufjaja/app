@@ -42,10 +42,12 @@ tamano_inicial = st.sidebar.slider("Tamaño del meteorito (m)", 0.1, 500.0, floa
 densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, int(densidad))
 
 # 🔹 Ajuste opcional del factor de abrasión atmosférica
-factor_calor = st.sidebar.slider(
-    "Nivel de abrasión atmosférica (constante de pérdida)",
-    1e-12, 1e-7, 1e-7, format"
+exp_factor = st.sidebar.slider(
+    "Nivel de abrasión atmosférica (potencia de 10)",
+    -9.0, -6.0, -8.0, step=0.1
 )
+factor_calor = 10 ** exp_factor
+st.sidebar.write(f"Constante actual: {factor_calor:.1e}")
 
 # ======================
 # Cálculos principales
