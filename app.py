@@ -38,9 +38,6 @@ densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, int(densidad))
 # Coordenadas
 lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
 
-# Velocidad realista según tamaño
-velocidad_kms = velocidad_realista(tamano) if st.sidebar.checkbox("Calcular velocidad realista") else float(velocidad_kms)
-
 # Calcular radio de impacto
 radio_km = calcular_radio_impacto(tamano, densidad, velocidad_kms)
 
