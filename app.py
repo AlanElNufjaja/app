@@ -106,9 +106,23 @@ with col1:
 
 with col2:
     st.write(f"**Final size after atmospheric entry:** {tamano_final:.6f} km")
-    st.write(f"**Crater radius:** {radio_km:.3f} km")
+    st.write(f"**Crater radius:** {radio_km*50:.3f} km")
     st.write(f"**Impact depth:** {profundidad_m:.3f} km")
     st.write(f"**Coordinates:** {lat:.4f}, {lon:.4f}")
+
+def evaluar_gravedad_impacto(energia, radio_km):
+    if energia > 1000:
+        return "**Critical damage**: The impact would cause massive destruction and widespread devastation."
+    elif energia > 100:
+        return "**Severe damage**: The impact would cause significant damage and potential loss of life."
+    elif radio_km*50 > 10:
+        return "**Moderate damage**: The impact would cause noticeable damage, but it would likely be contained."
+    else:
+        return "**Minimal damage**: The impact would likely cause little to no significant damage."
+
+gravedad_impacto = evaluar_gravedad_impacto(energia, radio_km)
+
+st.write(gravedad_impacto)
 
 url_externa = "https://appgit-nmfd77m9kjolnscbbubqzg.streamlit.app"
 col_a, col_b, col_c = st.columns([1, 3, 1])
@@ -121,4 +135,4 @@ with col_b:
     )
 st.write("---")
 
-mostrar_mapa(df, lat, lon, radio_km,tipodano)
+mostrar_mapa(df, lat, lon, radio_km*50,tipodano)
