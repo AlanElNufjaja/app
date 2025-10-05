@@ -17,7 +17,7 @@ def perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial, factor_cal
     perdida_tamano = min(perdida_tamano, tamano_inicial)  # Desintegración total si la pérdida es mayor que el tamaño
 
     # Tamaño final
-    if perdida_tamano >= tamano_inicial and tamano_inicial < 5:  # Solo se desintegra si el tamaño es pequeño
+    if perdida_tamano >= tamano_inicial and tamano_inicial < 1:  # Solo se desintegra si el tamaño es pequeño
         tamano_final = 0  # Desintegración total
     else:
         tamano_final = tamano_inicial - perdida_tamano
