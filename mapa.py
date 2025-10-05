@@ -1,15 +1,10 @@
-# mapa.py
 import streamlit as st
 import pydeck as pdk
 
 def mostrar_mapa(df, lat, lon, radio_km, tipodano):
-    """
-    Muestra un mapa 2D interactivo con Pydeck con zonas de impacto coloreadas:
-    rojo = impacto directo, naranja = cráter, amarillo = contaminación.
-    """
-    radio_km *=50
+    radio_km *= 50
 
-    if tipodano=="Impacto y crater":
+    if tipodano == "Impacto y crater":
         capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
@@ -22,17 +17,19 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[255, 0, 0, 160],  # rojo
+            get_color=[255, 0, 0, 160],  
             get_radius=radio_km*12.5,
             pickable=False
         )
-    elif tipodano=="Bola de fuego": 
+        layers = [capa_negra, capa_rojo]
+        
+    elif tipodano == "Bola de fuego": 
         capa_rojo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
             get_color=[255, 0, 0, 160],
-            get_radius=radio_km*12.5,
+            get_radius,
             pickable=False
         )
         capa_naranja = pdk.Layer(
@@ -52,7 +49,9 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             get_radius=radio_km * 750,
             pickable=False
         )
-    elif tipodano=="Sonido":
+        layers = [capa_rojo, capa_naranja, capa_amarillo]
+
+    elif tipodano == "Sonido":
         capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
@@ -60,29 +59,34 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             get_color=[16, 16, 148, 180],
             get_radius=radio_km * 750,
             pickable=False
+        )
         capa_rojo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[36, 36, 169, 80],  # amarillo
+            get_color=[36, 36, 169, 80],  
             get_radius=radio_km * 750,
             pickable=False
+        )
         capa_naranja = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[62, 62, 194, 80],  # amarillo
+            get_color=[62, 62, 194, 80],  
             get_radius=radio_km * 750,
             pickable=False
+        )
         capa_amarillo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[111, 111, 209, 80],  # amarillo
+            get_color=[111, 111, 209, 80],  
             get_radius=radio_km * 750,
             pickable=False
+        )
+        layers = [capa_negra, capa_rojo, capa_naranja, capa_amarillo]
 
-    elif tipodano=="Terremotos":
+    elif tipodano == "Terremotos":
         capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
@@ -90,28 +94,33 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             get_color=[151, 31, 22, 180],
             get_radius=radio_km * 750,
             pickable=False
+        )
         capa_rojo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[209, 21, 7, 80],  # amarillo
+            get_color=[209, 21, 7, 80],  
             get_radius=radio_km * 750,
             pickable=False
+        )
         capa_naranja = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[225, 58, 45, 80],  # amarillo
+            get_color=[225, 58, 45, 80],  
             get_radius=radio_km * 750,
             pickable=False
+        )
         capa_amarillo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
-            get_color=[221, 124, 117, 80],  # amarillo
+            get_color=[221, 124, 117, 80],  
             get_radius=radio_km * 750,
             pickable=False
-            
+        )
+        layers = [capa_negra, capa_rojo, capa_naranja, capa_amarillo]
+
     view_state = pdk.ViewState(
         latitude=lat,
         longitude=lon,
@@ -120,7 +129,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
     )
 
     deck = pdk.Deck(
-        layers=[capa_amarillo, capa_naranja, capa_rojo, capa_negra],
+        layers=layers,
         initial_view_state=view_state,
         map_style="light"
     )
