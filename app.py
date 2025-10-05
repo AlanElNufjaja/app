@@ -8,7 +8,7 @@ from red import perdida_tamano_meteorito
 from PIL import Image
 
 # Carga la imagen
-img = Image.open("Logo1")
+img = Image.open("Logo1.png")
 
 # Muestra la imagen con un ancho específico
 col1, col2, col3 = st.columns([10,3,5])
