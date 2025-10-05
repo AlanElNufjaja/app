@@ -69,7 +69,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             get_line_color=[255, 255, 0, 255],  
             get_line_width=1
         )
-        layers = [capa_rojo, capa_naranja, capa_amarillo]
+        layers = [capa_negra, capa_rojo, capa_naranja, capa_amarillo]
 
     elif tipodano == "Sonido":
         capa_negra = pdk.Layer(
