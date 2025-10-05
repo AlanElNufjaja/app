@@ -9,7 +9,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
     """
     radio_km *=50
 
-    if tipodano=="Impacto y crater"
+    if tipodano=="Impacto y crater":
         capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
@@ -26,7 +26,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             get_radius=radio_km*12.5,
             pickable=False
         )
-        elif tipodano=="Bola de fuego" 
+    elif tipodano=="Bola de fuego": 
         capa_rojo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
@@ -52,7 +52,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             get_radius=radio_km * 750,
             pickable=False
         )
-        elif tipodano=="Sonido"
+    elif tipodano=="Sonido":
         capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
@@ -82,7 +82,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             get_radius=radio_km * 750,
             pickable=False
 
-        elif tipodano=="Terremotos"
+    elif tipodano=="Terremotos":
         capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
