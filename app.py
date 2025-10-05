@@ -6,7 +6,7 @@ from damage import generar_puntos_circulo
 from mapa import mostrar_mapa
 from red import perdida_tamano_meteorito  # 🔹 función adaptada a km
 
-st.title("Visualizador de Meteoritos 2D ☄️")
+st.title("Visualizador de Meteoritos ☄️")
 
 g = 9.81  # m/s²
 DENSIDAD_ROCA = 2700
