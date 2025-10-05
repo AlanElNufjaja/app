@@ -24,7 +24,6 @@ mete = meteoritos[meteoritos['id'].astype(str) == meteorito_seleccionado].iloc[0
 # ======================
 tamano_inicial = ((mete['estimated_diameter.kilometers.estimated_diameter_min'] +
                    mete['estimated_diameter.kilometers.estimated_diameter_max']) / 2) * 1000  # m
-
 densidad_default = 3000
 velocidad_default = mete['relative_velocity.kilometers_per_second']
 
@@ -51,23 +50,20 @@ material = st.sidebar.selectbox("Superficie de impacto", ["Roca dura", "Tierra b
 lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
 velocidad_ms = velocidad_kms * 1000
 
-# Calcular tamaño final tras abrasión atmosférica
+# 1️⃣ Pérdida de tamaño por abrasión
 tamano_final = perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial, factor_calor)
+tamano_final = max(tamano_final, 0.1)  # Evitar valores demasiado pequeños
 
-# Evitar valores demasiado pequeños
-if tamano_final < 0.1:
-    tamano_final = 0.1
+# 2️⃣ Calcular impacto según material
+impacto = calcular_impacto(tamano_final, velocidad_ms, densidad, material)
 
-# Calcular impacto según material
-impacto = calcular_impacto(tamano_final / 2, velocidad_ms, densidad, material)
-
-# Forzar un radio mínimo para que siempre aparezca
+# Forzar radio mínimo para asegurar visualización
 MIN_RADIO_KM = 0.05
 radio_km = max(impacto["radio_km"], MIN_RADIO_KM)
 diametro = impacto["diametro_m"]
 profundidad = impacto["profundidad_m"]
 
-# Generar puntos de impacto
+# 3️⃣ Generar puntos de impacto
 df = generar_puntos_circulo(lat, lon, radio_km)
 if df.empty:
     st.warning("No se pudieron generar puntos de impacto, usando radio mínimo.")
