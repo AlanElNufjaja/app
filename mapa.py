@@ -4,7 +4,7 @@ import pydeck as pdk
 def mostrar_mapa(df, lat, lon, radio_km, tipodano):
     radio_km *= 50
 
-    if tipodano == "Impacto y crater":
+    if tipodano == "Impact and crater":
         capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
@@ -27,7 +27,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
         )
         layers = [capa_negra, capa_rojo]
         
-    elif tipodano == "Bola de fuego": 
+    elif tipodano == "Fireball": 
         capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
@@ -71,7 +71,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
         )
         layers = [capa_negra, capa_rojo, capa_naranja, capa_amarillo]
 
-    elif tipodano == "Sonido":
+    elif tipodano == "Sound":
         capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
@@ -114,7 +114,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
         )
         layers = [capa_negra, capa_rojo, capa_naranja, capa_amarillo]
 
-    elif tipodano == "Terremotos":
+    elif tipodano == "Earthquakes":
         capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
