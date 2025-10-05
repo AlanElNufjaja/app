@@ -1,9 +1,8 @@
 def perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial, factor_calor):
-    velocidad_ms = velocidad_kms * 1000
-    energia = 0.5 * densidad * (velocidad_ms**2)
+    energia = 0.5 * densidad * (velocidad_kms**2)
 
     # Pérdida proporcional a la energía y al factor_calor
-    perdida_tamano = factor_calor * energia / densidad
+    perdida_tamano = (factor_calor * energia) / densidad
 
     # Aumentar la pérdida si el meteorito es muy pequeño, va muy rápido o tiene baja densidad
     if tamano_inicial < 1 and velocidad_kms > 0.5:  # Umbral para meteoritos pequeños y veloces
