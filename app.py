@@ -80,7 +80,7 @@ elif material == "Tierra blanda":
     radio_km = max(diametro_m / (2 * ESCALA_IMPACTO), 0.0)
 
 else:  # Agua
-    radio_km = max(tamano_inicial * 1/50, 0.0)
+    radio_km = max(tamano_inicial * 1/50, 0.5)
         
 # Generar puntos de impacto
 df = generar_puntos_circulo(lat, lon, radio_km)
