@@ -81,6 +81,7 @@ else:  # Agua
 # Generar puntos de impacto
 df = generar_puntos_circulo(lat, lon, radio_km)
 
+radio_km /= 50
 # ======================
 # Mostrar resultados
 # ======================
