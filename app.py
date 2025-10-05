@@ -46,7 +46,7 @@ exp_factor = st.sidebar.slider(
     "Nivel de abrasión atmosférica (potencia de 10)",
     -9.0, -7.5, -9.0, step=0.01
 )
-factor_calor = (10 ** exp_factor)*10
+factor_calor = (10 ** exp_factor)*100
 st.sidebar.write(f"Constante actual: {factor_calor:.1e}")
 # ======================
 # Cálculos principales
