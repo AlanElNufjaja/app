@@ -32,7 +32,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             get_radius=radio_km*50,
             pickable=False
         )
-        capa_roja = pdk.Layer(
+        capa_rojo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
