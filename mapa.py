@@ -31,7 +31,7 @@ def mostrar_mapa(df, lat, lon, radio_km):
         data=df,
         get_position=["lon", "lat"],
         get_color=[255, 165, 0, 120],  # naranja
-        get_radius=radio_km * 250,
+        get_radius=radio_km * 500,
         pickable=False
     )
 
