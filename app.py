@@ -65,4 +65,37 @@ impacto = calcular_impacto(tamano_final / 2, velocidad_ms, densidad, material)
 MIN_RADIO_KM = 0.05
 radio_km = max(impacto["radio_km"], MIN_RADIO_KM)
 diametro = impacto["diametro_m"]
-profundidad =
+profundidad = impacto["profundidad_m"]
+
+# Generar puntos de impacto
+df = generar_puntos_circulo(lat, lon, radio_km)
+if df.empty:
+    st.warning("No se pudieron generar puntos de impacto, usando radio mínimo.")
+    df = generar_puntos_circulo(lat, lon, MIN_RADIO_KM)
+
+# ======================
+# Mostrar resultados
+# ======================
+st.subheader("🔍 Resultados de la simulación")
+st.write(f"**Tamaño inicial:** {tamano_inicial:.2f} m")
+st.write(f"**Tamaño final tras entrar a la atmósfera:** {tamano_final:.2f} m")
+st.write(f"**Densidad:** {densidad} kg/m³")
+st.write(f"**Velocidad de impacto:** {velocidad_kms:.2f} km/s")
+st.write(f"**Material de impacto:** {material}")
+
+if material in ["Roca dura", "Tierra blanda"]:
+    st.write(f"**Diámetro estimado del cráter:** {diametro:.2f} m")
+    st.write(f"**Profundidad estimada del cráter:** {profundidad:.2f} m")
+else:
+    st.write(f"**Altura inicial de la columna de agua:** {diametro:.2f} m")
+
+st.write(f"**Radio estimado de impacto para mapa:** {radio_km:.2f} km")
+st.write(f"**Coordenadas:** {lat:.4f}, {lon:.4f}")
+st.write(f"Tamaño final calculado: {tamano_final:.4f} m")
+st.write(f"Radio calculado: {radio_km:.4f} km")
+
+# ======================
+# Mostrar mapa
+# ======================
+st.subheader("🗺️ Mapa de impacto")
+mostrar_mapa(df, lat, lon, radio_km)
