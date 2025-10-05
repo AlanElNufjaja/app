@@ -18,7 +18,7 @@ datos_limpios = pd.read_csv("datos_limpios.csv")
 meteoritos = pd.concat([datos_base, datos_limpios], axis=1)
 opciones = meteoritos['id'].astype(str).tolist()
 meteorito_seleccionado = st.sidebar.selectbox("Selecciona un meteorito", opciones)
-meterial = meteoritos[meteoritos['id'].astype(str) == meteorito_seleccionado].iloc[0]
+mete = meteoritos[meteoritos['id'].astype(str) == meteorito_seleccionado].iloc[0]
 
 # ======================
 # Datos predeterminados del meteorito
