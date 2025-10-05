@@ -1,6 +1,5 @@
 import numpy as np
 
-G = 6.674e-11  # Constante Gravitacional (No se usa directamente aquí, solo para referencia)
 g = 9.81       # Aceleración de la gravedad (m/s^2)
 DENSIDAD_ASTEROIDE = 3000  # Densidad típica de asteroide rocoso (kg/m^3)
 DENSIDAD_ROCA = 2700       # Densidad de la corteza (kg/m^3)
