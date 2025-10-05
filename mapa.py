@@ -20,7 +20,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             data=df,
             get_position=["lon", "lat"],
             get_color=[255, 0, 0, 100],  
-            get_radius=radio_km*25,
+            get_radius=radio_km*30,
             pickable=False,
             get_line_color=[255, 0, 0, 255],  
             get_line_width=1
@@ -33,7 +33,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             data=df,
             get_position=["lon", "lat"],
             get_color=[255, 0, 0, 150],
-            get_radius=radio_km*60,
+            get_radius=radio_km*50,
             pickable=False,
             get_line_color=[255, 0, 0, 255],  
             get_line_width=1
