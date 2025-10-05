@@ -27,49 +27,49 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
         )
         layers = [capa_negra, capa_rojo]
         
-    elif tipodano == "Bola de fuego": 
-        capa_negra = pdk.Layer(
-            "ScatterplotLayer",
-            data=df,
-            get_position=["lon", "lat"],
-            get_color=[255, 0, 0, 240], 
-            get_radius=radio_km*50,
-            pickable=False,
-            get_line_color=[0, 0, 0, 255],  
-            get_line_width=1
-        )
-        capa_rojo = pdk.Layer(
-            "ScatterplotLayer",
-            data=df,
-            get_position=["lon", "lat"],
-            get_color=[255, 0, 0, 1000],
-            get_radius=radio_km*250,
-            pickable=False,
-            get_line_color=[255, 0, 0, 255],  
-            get_line_width=1
-        )
-        capa_naranja = pdk.Layer(
-            "ScatterplotLayer",
-            data=df,
-            get_position=["lon", "lat"],
-            get_color=[255, 165, 0, 80],
-            get_radius=radio_km * 250,
-            pickable=False,
-            get_line_color=[255, 165, 0, 255],  
-            get_line_width=1
-        )
+  elif tipodano == "Bola de fuego": 
+    capa_negra = pdk.Layer(
+        "ScatterplotLayer",
+        data=df,
+        get_position=["lon", "lat"],
+        get_color=[255, 0, 0, 50], 
+        get_radius=radio_km*500,
+        pickable=False,
+        get_line_color=[255, 0, 0, 255],  
+        get_line_width=1
+    )
+    capa_rojo = pdk.Layer(
+        "ScatterplotLayer",
+        data=df,
+        get_position=["lon", "lat"],
+        get_color=[255, 165, 0, 50],
+        get_radius=radio_km*250,
+        pickable=False,
+        get_line_color=[255, 165, 0, 255],  
+        get_line_width=1
+    )
+    capa_naranja = pdk.Layer(
+        "ScatterplotLayer",
+        data=df,
+        get_position=["lon", "lat"],
+        get_color=[255, 255, 0, 50],
+        get_radius=radio_km * 100,
+        pickable=False,
+        get_line_color=[255, 255, 0, 255],  
+        get_line_width=1
+    )
 
-        capa_amarillo = pdk.Layer(
-            "ScatterplotLayer",
-            data=df,
-            get_position=["lon", "lat"],
-            get_color=[255, 255, 0, 80],
-            get_radius=radio_km * 500,
-            pickable=False,
-            get_line_color=[255, 255, 0, 255],  
-            get_line_width=1
-        )
-        layers = [capa_negra, capa_rojo, capa_naranja, capa_amarillo]
+    capa_amarillo = pdk.Layer(
+        "ScatterplotLayer",
+        data=df,
+        get_position=["lon", "lat"],
+        get_color=[255, 0, 0, 100],
+        get_radius=radio_km * 50,
+        pickable=False,
+        get_line_color=[255, 0, 0, 255],  
+        get_line_width=1
+    )
+    layers = [capa_negra, capa_rojo, capa_naranja, capa_amarillo]
 
     elif tipodano == "Sonido":
         capa_negra = pdk.Layer(
