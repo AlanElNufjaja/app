@@ -72,7 +72,7 @@ tamano_final = perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial,
 radio_km = calcular_radio_impacto(tamano_final, densidad, velocidad_kms)
 radio_km = max(radio_km, 0.0)  
 
-energia = (0.5 * densidad * (4/3 * np.pi * (radio_km*1000)**3) * (velocidad_kms*1000)**2) / 4.184e+15
+energia = (0.5 * densidad * (4/3 * np.pi * (radio_km*100)**3) * (velocidad_kms*100)**2) / 4.184e+15
 
 
 if material == "Hard rock":
