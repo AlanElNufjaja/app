@@ -24,12 +24,20 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
         layers = [capa_negra, capa_rojo]
         
     elif tipodano == "Bola de fuego": 
-        capa_rojo = pdk.Layer(
+        capa_negra = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
             get_color=[255, 0, 0, 160],
             get_radius=radio_km*50,
+            pickable=False
+        )
+        capa_roja = pdk.Layer(
+            "ScatterplotLayer",
+            data=df,
+            get_position=["lon", "lat"],
+            get_color=[255, 20, 20, 160],
+            get_radius=radio_km*250,
             pickable=False
         )
         capa_naranja = pdk.Layer(
