@@ -33,7 +33,6 @@ tamano_inicial = (
      mete['estimated_diameter.kilometers.estimated_diameter_max']) / 2
 )  # ahora en km
 
-densidad = 3000  # kg/m³ estándar
 velocidad_kms = mete['relative_velocity.kilometers_per_second']  # km/s
 
 # ======================
@@ -75,12 +74,12 @@ energia_joules = 0.5 * densidad * (4/3 * np.pi * radio_km**3) * velocidad_kms**2
 if material == "Roca dura":
     diametro_m = 0.1 * (energia_joules / (DENSIDAD_ROCA * g))**0.25
     profundidad_m = diametro_m / 5
-    radio_km = max(diametro_m / 2 * ESCALA_IMPACTO, 0.05)
+    radio_km = max(diametro_m / (2 * ESCALA_IMPACTO), 0.05)
 
 elif material == "Tierra blanda":
     diametro_m = 100 * (energia_joules / (DENSIDAD_ROCA * g))**0.25 * 1.15
     profundidad_m = (0.1 * (energia_joules / (DENSIDAD_ROCA * g))**0.25 / 5) * 0.70
-    radio_km = max(diametro_m / 2 * ESCALA_IMPACTO, 0.05)
+    radio_km = max(diametro_m / (2 * ESCALA_IMPACTO), 0.05)
 
 else:  # Agua
     diametro_m = 0.2 * (energia_joules / (DENSIDAD_AGUA * g))**(1/3) / radio_km
