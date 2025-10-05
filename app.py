@@ -12,7 +12,7 @@ g = 9.81  # m/s²
 DENSIDAD_ROCA = 2700
 DENSIDAD_BLANDA = 1800
 DENSIDAD_AGUA = 1000
-
+ESCALA_IMPACTO = 1.0 / 1000
 # ======================
 # Cargar datos
 # ======================
