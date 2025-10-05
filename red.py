@@ -5,11 +5,13 @@ def perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial, factor_cal
     # Pérdida proporcional a la energía y al factor_calor
     perdida_tamano = factor_calor * energia / densidad
 
-    # Aumentar la pérdida si el meteorito es muy pequeño o va muy rápido
-    if tamano_inicial < 1:  # Umbral para meteoritos pequeños
+    # Aumentar la pérdida si el meteorito es muy pequeño, va muy rápido o tiene baja densidad
+    if tamano_inicial < 1 and velocidad_kms > 0.5:  # Umbral para meteoritos pequeños y veloces
         perdida_tamano *= 2
-    if velocidad_kms > 20:  # Umbral para velocidades altas
+    if densidad < 2000 and velocidad_kms > 0.5:  # Umbral para meteoritos de baja densidad y veloces
         perdida_tamano *= 1.5
+    if velocidad_kms > 10:  # Umbral para velocidades muy altas
+        perdida_tamano *= 2
 
     # Limitar pérdida máxima relativa al tamaño
     perdida_tamano = min(perdida_tamano, tamano_inicial)  # Desintegración total si la pérdida es mayor que el tamaño
