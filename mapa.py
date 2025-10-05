@@ -2,7 +2,7 @@
 import streamlit as st
 import pydeck as pdk
 
-def mostrar_mapa(df, lat, lon, radio_km):
+def mostrar_mapa(df, lat, lon, radio_km, tipodano):
     """
     Muestra un mapa 2D interactivo con Pydeck con zonas de impacto coloreadas:
     rojo = impacto directo, naranja = cráter, amarillo = contaminación.
