@@ -49,12 +49,8 @@ material = st.sidebar.selectbox(
     "Selecciona el material del impacto",
     ["Roca dura", "Tierra blanda", "Agua"])
 # 🔹 Ajuste opcional del factor de abrasión atmosférica
-exp_factor = st.sidebar.slider(
-    "Nivel de abrasión atmosférica (potencia de 10)",
-    -9.0, -7.5, -9.0, step=0.01
-)
-factor_calor = (10 ** exp_factor)*100  # ajustado para km
-st.sidebar.write(f"Constante actual: {factor_calor:.1e}")
+factor_calor = (10 ** -10)*100  # ajustado para km
+st.sidebar.write(f"Constante de calor: {factor_calor:.1e}")
 
 # ======================
 # Cálculos principales
