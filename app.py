@@ -46,7 +46,7 @@ exp_factor = st.sidebar.slider(
     "Nivel de abrasión atmosférica (potencia de 10)",
     -9.0, -6.0, -8.0, step=0.1
 )
-
+factor_calor=exp_factor
 # ======================
 # Cálculos principales
 # ======================
