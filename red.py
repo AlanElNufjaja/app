@@ -1,4 +1,4 @@
-def perdida_tamano_meteorito(densidad, velocidad, tamano_inicial):
+def perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial):
     """
     Calcula la pérdida aproximada de tamaño de un meteorito al entrar en la atmósfera.
     Parámetros:
