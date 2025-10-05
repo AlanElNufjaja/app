@@ -83,7 +83,7 @@ elif material == "Tierra blanda":
     radio_km = max(diametro_m / 2 * ESCALA_IMPACTO, 0.05)
 
 else:  # Agua
-    diametro_m = 0.2 * (energia_joules / (DENSIDAD_AGUA * g))**(1/3) / radio_ast
+    diametro_m = 0.2 * (energia_joules / (DENSIDAD_AGUA * g))**(1/3) / radio_km
     profundidad_m = diametro_m
     radio_km = max(diametro_m * ESCALA_IMPACTO, 0.05)
         
