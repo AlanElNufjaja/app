@@ -77,7 +77,7 @@ if material == "Roca dura":
     radio_km = max(diametro_m / (2 * ESCALA_IMPACTO), 0.05)
 
 elif material == "Tierra blanda":
-    diametro_m = 100 * (energia_joules / (DENSIDAD_ROCA * g))**0.25 * 1.15
+    diametro_m = 0.1 * (energia_joules / (DENSIDAD_ROCA * g))**0.25 * 1.15
     profundidad_m = (0.1 * (energia_joules / (DENSIDAD_ROCA * g))**0.25 / 5) * 0.70
     radio_km = max(diametro_m / (2 * ESCALA_IMPACTO), 0.05)
 
