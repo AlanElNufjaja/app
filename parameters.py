@@ -35,22 +35,6 @@ def obtener_coordenadas(nombre_ciudad, lat_manual=19.4326, lon_manual=-99.1332):
     return lat, lon
 
 
-def velocidad_realista(tamano_m):
-    """
-    Calcula la velocidad promedio de impacto según tamaño del meteorito.
-    Los meteoritos pequeños se frenan mucho y se desintegran, los grandes mantienen velocidad.
-    tamano_m: diámetro en metros
-    Retorna velocidad en km/s
-    """
-    if tamano_m < 1:
-        return 0  # se desintegra
-    elif tamano_m < 10:
-        return 12  # pequeños, frenados
-    elif tamano_m < 50:
-        return 20  # medianos
-    else:
-        return 25  # grandes
-
 def calcular_radio_impacto(tamano_m, densidad, velocidad_kms, k=0.05):
     """
     Calcula un radio estimado de destrucción en km según parámetros del meteorito:
