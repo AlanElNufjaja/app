@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from parameters import obtener_coordenadas, velocidad_realista, calcular_radio_impacto
+from parameters import obtener_coordenadas, calcular_radio_impacto
 from damage import generar_puntos_circulo
 from mapa import mostrar_mapa
 from red import perdida_tamano_meteorito  # 🔹 importamos la función externa
