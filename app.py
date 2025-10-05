@@ -6,7 +6,7 @@ from damage import generar_puntos_circulo
 from mapa import mostrar_mapa
 from red import perdida_tamano_meteorito  
 
-st.image("LOGO1.png")
+st.image("LOGO1-removebg-preview.png")
 
 g = 9.81  # m/s²
 DENSIDAD_ROCA = 2700
