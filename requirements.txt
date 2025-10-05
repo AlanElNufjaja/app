@@ -8,3 +8,10 @@ streamlit-folium
 pydeck
 plotly
 pyvista
+pip>=24.0
+trimesh >=4.8.3
+Pillow>=9.5.0
+scipy
+trimesh
+stpyvista
+imageio
