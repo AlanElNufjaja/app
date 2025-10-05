@@ -111,8 +111,8 @@ with col2:
     st.write(f"**Coordinates:** {lat:.4f}, {lon:.4f}")
 
 url_externa = "https://appgit-nmfd77m9kjolnscbbubqzg.streamlit.app"
-col1, col2, col3 = st.columns([1, 3, 1])
-with col2:
+col_a, col_b, col_c = st.columns([1, 3, 1])
+with col_b:
     st.link_button(
         "🚀 Ir a la App (Centrado)",
         url_externa,
