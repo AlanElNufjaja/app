@@ -63,11 +63,11 @@ lat, lon = obtener_coordenadas(lugar, lat_manual, lon_manual)
 
 # Calcular tamaño final (usando el valor ajustado de abrasión)
 tamano_final = perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial, factor_calor)
-tamano_final = max(tamano_final, 0.0001)  # evitar tamaños negativos
+tamano_final = max(tamano_final, 0.000)  # evitar tamaños negativos
 
 # Calcular radio de impacto con tamaño reducido (ahora todo en km)
 radio_km = calcular_radio_impacto(tamano_final, densidad, velocidad_kms)
-radio_km = max(radio_km, 0.01)  # asegurar visibilidad en el mapa
+radio_km = max(radio_km, 0.0)  # asegurar visibilidad en el mapa
 
 energia_joules = 0.5 * densidad * (4/3 * np.pi * radio_km**3) * velocidad_kms**2
 
@@ -77,12 +77,12 @@ if material == "Roca dura":
 elif material == "Tierra blanda":
     diametro_m = 0.1 * (energia_joules / (DENSIDAD_ROCA * g))**0.25 * 1.15
     profundidad_m = (0.1 * (energia_joules / (DENSIDAD_ROCA * g))**0.25 / 5) * 0.70
-    radio_km = max(diametro_m / (2 * ESCALA_IMPACTO), 0.05)
+    radio_km = max(diametro_m / (2 * ESCALA_IMPACTO), 0.0)
 
 else:  # Agua
     diametro_m = 0.2 * (energia_joules / (DENSIDAD_AGUA * g))**(1/3) / radio_km
     profundidad_m = diametro_m
-    radio_km = max(diametro_m * ESCALA_IMPACTO, 0.05)
+    radio_km = max(diametro_m * ESCALA_IMPACTO, 0.0)
         
 # Generar puntos de impacto
 df = generar_puntos_circulo(lat, lon, radio_km)
