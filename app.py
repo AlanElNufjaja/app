@@ -44,7 +44,7 @@ densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, int(densidad))
 # 🔹 Ajuste opcional del factor de abrasión atmosférica
 factor_calor = st.sidebar.slider(
     "Nivel de abrasión atmosférica (constante de pérdida)",
-    1e-9, 1e-6, 1e-8, format="%.1e"
+    1e-6, 1e-9, 1e-7, format="%.1e"
 )
 
 # ======================
