@@ -62,7 +62,7 @@ tamano_final = max(tamano_final, 0.0001)  # evitar tamaños negativos
 radio_km = calcular_radio_impacto(tamano_final, densidad, velocidad_kms)
 radio_km = max(radio_km, 0.01)  # asegurar visibilidad en el mapa
 
-  energia_joules = 0.5 * densidad_ast * (4/3 * np.pi * radio_ast**3) * velocidad_ms**2
+energia_joules = 0.5 * densidad * (4/3 * np.pi * radio_km**3) * velocidad_kms**2
 
 if material == "Roca dura":
     diametro_m = 0.1 * (energia_joules / (DENSIDAD_ROCA * g))**0.25
