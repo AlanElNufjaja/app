@@ -38,7 +38,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             get_line_color=[255, 0, 0, 255],  
             get_line_width=1
         )
-        capa_rojo = pdk.Layer(
+            capa_rojo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
             get_position=["lon", "lat"],
@@ -58,7 +58,7 @@ def mostrar_mapa(df, lat, lon, radio_km, tipodano):
             get_line_color=[255, 255, 0, 255],  
             get_line_width=1
         )
-    
+        
         capa_amarillo = pdk.Layer(
             "ScatterplotLayer",
             data=df,
