@@ -101,4 +101,4 @@ st.write(f"**Coordenadas:** {lat:.4f}, {lon:.4f}")
 # ======================
 # Mostrar mapa
 # ======================
-mostrar_mapa(df, lat, lon, radio_km)
+mostrar_mapa(df, lat, lon, radio_km,tipodano)
