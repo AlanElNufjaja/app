@@ -3,23 +3,23 @@ def perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial, factor_cal
     Calcula la pérdida aproximada de tamaño de un meteorito al entrar en la atmósfera.
     Parámetros:
       densidad: densidad del meteorito (kg/m³)
-      velocidad: velocidad de entrada (m/s)
+      velocidad_kms: velocidad de entrada (km/s)
       tamano_inicial: diámetro inicial del meteorito (m)
+      factor_calor: factor ajustable de abrasión
     Retorna:
       tamaño final estimado (m)
     """
-    # --- Parámetros de simulación simplificados ---
-    coef_resistencia = 0.47        # coeficiente de arrastre (esfera)
-    densidad_aire = 1.225           # kg/m³ al nivel del mar
-  
-    # Energía cinética por unidad de volumen (simplificada)
-    energia = 0.5 * densidad * (velocidad_kms**2)
-    
-    # Pérdida estimada de masa (proporcional a energía y área)
-    area = 3.1416 * (tamano_inicial / 2)**2
-    perdida_tamano = factor_calor * energia * area / densidad
-    
-    # Evita valores negativos
-    tamano_final = max(tamano_inicial - perdida_tamano, 0)
-    
+    # --- Parámetros simplificados ---
+    velocidad_ms = velocidad_kms * 1000  # convertir km/s a m/s
+    energia = 0.5 * densidad * (velocidad_ms**2)  # energía cinética por unidad de volumen
+
+    # Pérdida proporcional a la energía por unidad de masa
+    perdida_tamano = factor_calor * energia / densidad
+
+    # Limitar pérdida máxima
+    perdida_tamano = min(perdida_tamano, 0.9 * tamano_inicial)
+
+    # Calcular tamaño final
+    tamano_final = max(tamano_inicial - perdida_tamano, 0.1)
+
     return tamano_final
