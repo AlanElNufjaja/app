@@ -13,7 +13,7 @@ def mostrar_mapa(df, lat, lon, radio_km):
         data=df,
         get_position=["lon", "lat"],
         get_color=[0, 0, 0, 255],  # rojo
-        get_radius=radio_km,
+        get_radius=radio_km*5,
         pickable=False
     )
     capa_rojo = pdk.Layer(
