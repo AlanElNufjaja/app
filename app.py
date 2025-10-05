@@ -41,7 +41,7 @@ lon_manual = st.sidebar.slider("Longitud manual", float(-180), float(180), -99.1
 tamano_inicial = st.sidebar.slider("Tamaño del meteorito (km)", 0.0, 10.0, float(tamano_inicial), 0.0001)
 densidad = st.sidebar.slider("Densidad (kg/m³)", 1000, 8000, int(densidad))
 velocidad_kms = st.sidebar.slider("Velocidad (km/s)", 1.0, 30.0, float(velocidad_kms), 0.1)
-
+meterial = st.sidebar.selectbox("Selecciona un meteorito", "Roca dura","Tierra Blanda","Agua")
 # 🔹 Ajuste opcional del factor de abrasión atmosférica
 exp_factor = st.sidebar.slider(
     "Nivel de abrasión atmosférica (potencia de 10)",
