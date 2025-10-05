@@ -58,19 +58,22 @@ velocidad_ms = velocidad_kms * 1000
 tamano_final = perdida_tamano_meteorito(densidad, velocidad_kms, tamano_inicial, factor_calor)
 
 # Calcular energía del meteorito
-masa, ek_joules, ek_megatones = calcular_energia(tamano_final / 2, velocidad_ms, densidad)  # radio = tamano/2
+masa, ek_joules, ek_megatones = calcular_energia(tamano_final / 2, velocidad_ms, densidad)  # radio = tamano_final/2
 
+# ------------------------
 # Impacto según material
+# ------------------------
 if material == "Roca dura":
     diametro, profundidad = impacto_roca_dura(ek_joules)
-    radio_km = diametro / 2 / 1000
+    radio_km = max(diametro / 2 / 1000, 0.05)  # mínimo 50 m para que se vea
 elif material == "Tierra blanda":
     diam_roca, prof_roca = impacto_roca_dura(ek_joules)
     diametro, profundidad = impacto_tierra_blanda(diam_roca, prof_roca)
-    radio_km = diametro / 2 / 1000
+    radio_km = max(diametro / 2 / 1000, 0.05)
 else:  # Agua
     altura = impacto_agua(ek_joules, tamano_final / 2)
-    radio_km = altura / 1000  # Escala simple
+    # Escalar proporcional al tamaño del meteorito para que se vea en mapa
+    radio_km = max((altura * tamano_final / 50_000), 0.05)
 
 # Generar puntos para mapa
 df = generar_puntos_circulo(lat, lon, radio_km)
